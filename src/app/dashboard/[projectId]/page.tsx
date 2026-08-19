@@ -143,22 +143,14 @@ export default function Dashboard({ params }: { params: { projectId: string } })
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#ededed] font-sans selection:bg-[#4A696C]/30">
-      <header className="border-b border-[#333333] bg-[#000000] px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Link href="/dashboard" className="text-[#a1a1aa] hover:text-white mr-2">← Back</Link>
-          <div className="w-8 h-8 rounded border border-[#333333] bg-[#111111] flex items-center justify-center">
-            <svg className="w-4 h-4 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-            </svg>
-          </div>
-          <h1 className="font-medium text-lg text-white">Broadcast</h1>
-        </div>
-      </header>
+    <div className="max-w-7xl mx-auto px-8 py-12 animate-in fade-in duration-500">
+      <div className="mb-10">
+        <h1 className="text-3xl font-semibold text-white tracking-tight mb-2">Project Workspace</h1>
+        <p className="text-[#a1a1aa] text-sm font-mono">ID: {params.projectId}</p>
+      </div>
 
-      <div className="p-8 md:p-24">
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12">
-        <div className="flex-1 bg-[#000000] border border-[#333333] rounded-lg p-8">
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex-1 bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#333333] rounded-xl p-8 shadow-2xl">
           <form onSubmit={handleBroadcast} className="space-y-6" noValidate>
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-2">Notification Title</label>
