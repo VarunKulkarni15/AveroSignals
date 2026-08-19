@@ -1,12 +1,22 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function POST(req: Request) {
   try {
     const { broadcastId } = await req.json();
 
     if (!broadcastId) {
-      return NextResponse.json({ error: 'Missing broadcast ID' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing broadcast ID' }, { status: 400, headers: corsHeaders });
     }
 
     const supabase = createClient(
@@ -29,9 +39,9 @@ export async function POST(req: Request) {
         .eq('id', broadcastId);
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true }, { headers: corsHeaders });
   } catch (error) {
     console.error('Tracking error:', error);
-    return NextResponse.json({ error: 'Tracking failed' }, { status: 500 });
+    return NextResponse.json({ error: 'Tracking failed' }, { status: 500, headers: corsHeaders });
   }
 }
