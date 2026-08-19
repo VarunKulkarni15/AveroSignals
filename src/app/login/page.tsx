@@ -2,7 +2,9 @@
 
 import { login, signup, signInWithGoogle, signInWithGithub } from './actions'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createBrowserClient } from '@supabase/ssr'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage({ searchParams }: { searchParams?: { error?: string } }) {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -13,6 +15,19 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isGithubLoading, setIsGithubLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        router.push('/dashboard')
+      }
+    })
+  }, [router])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
