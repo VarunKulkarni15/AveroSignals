@@ -79,7 +79,6 @@ export default async function DashboardPage() {
                         src={project.icon_url || `https://www.google.com/s2/favicons?domain=${project.site_url}&sz=64`} 
                         alt="Project Icon" 
                         className="w-7 h-7 rounded-full border border-[#333333] bg-[#000000] object-contain p-0.5"
-                        onError={(e) => { e.currentTarget.src = `https://www.google.com/s2/favicons?domain=${project.site_url}&sz=64` }}
                       />
                     ) : (
                       <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#4A696C] to-[#2c3e40] flex items-center justify-center text-white font-bold text-sm shadow-inner">
