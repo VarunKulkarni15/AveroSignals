@@ -19,6 +19,11 @@ export async function POST(req: Request) {
 
     const bodyData = await req.json();
     const { title, body, image, targetOS, targetRegion, scheduleTime, projectId } = bodyData;
+    
+    // Get host for Service Worker tracking
+    const host = req.headers.get('host') || 'localhost:3000';
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const pushhubUrl = `${protocol}://${host}`;
   
     if (!projectId || !title || !body) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -97,7 +102,8 @@ export async function POST(req: Request) {
       title: title || 'New Notification',
       body: body || 'You have a new update!',
       image: image || undefined,
-      broadcastId: broadcastId // Pass this to the service worker for click tracking!
+      broadcastId: broadcastId,
+      pushhubUrl: pushhubUrl
     });
 
     const webPushSubs = subscriptions.map(sub => sub.subscription_data);

@@ -9,7 +9,8 @@ self.addEventListener('push', function(event) {
         badge: '/icon.png',
         data: {
           url: data.url || '/',
-          broadcastId: data.broadcastId || null
+          broadcastId: data.broadcastId || null,
+          pushhubUrl: data.pushhubUrl || null
         }
       };
 
@@ -31,10 +32,10 @@ self.addEventListener('notificationclick', function(event) {
   
   const clickData = event.notification.data;
   
-  if (clickData && clickData.broadcastId) {
+  if (clickData && clickData.broadcastId && clickData.pushhubUrl) {
     // Ping the tracking endpoint in the background
     event.waitUntil(
-      fetch('/api/track/click', {
+      fetch(`${clickData.pushhubUrl}/api/track/click`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ broadcastId: clickData.broadcastId })
