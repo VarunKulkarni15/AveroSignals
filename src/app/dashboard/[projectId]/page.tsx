@@ -204,6 +204,46 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
         </div>
       </div>
 
+      {/* Stats Row */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div className="bg-[#0a0a0a] border border-[#333333] rounded-xl p-6 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Total Subscribers</p>
+            <p className="text-2xl font-semibold text-white">0</p>
+          </div>
+          <div className="w-10 h-10 rounded-full bg-[#111111] border border-[#333333] flex items-center justify-center">
+            <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+        </div>
+        <div className="bg-[#0a0a0a] border border-[#333333] rounded-xl p-6 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Total Broadcasts</p>
+            <p className="text-2xl font-semibold text-white">0</p>
+          </div>
+          <div className="w-10 h-10 rounded-full bg-[#111111] border border-[#333333] flex items-center justify-center">
+            <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+            </svg>
+          </div>
+        </div>
+        <div className="bg-[#0a0a0a] border border-[#333333] rounded-xl p-6 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Status</p>
+            <p className="text-2xl font-semibold text-[#8BAAA8] flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#8BAAA8] animate-pulse"></span>
+              Active
+            </p>
+          </div>
+          <div className="w-10 h-10 rounded-full bg-[#111111] border border-[#333333] flex items-center justify-center">
+            <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-1 bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#333333] rounded-xl p-8 shadow-2xl">
           <form onSubmit={handleBroadcast} className="space-y-6" noValidate>
@@ -337,7 +377,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
               ))}
             </div>
 
-            <div className="min-h-[250px] flex items-center justify-center">
+            <div className="min-h-[250px] flex items-center justify-center pb-6">
               <NotificationPreview 
                 title={title} 
                 body={body} 
@@ -347,39 +387,6 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                 icon={icon} 
                 os={previewOS} 
               />
-            </div>
-
-            <div className="mt-8 border-t border-[#333333] pt-6">
-              <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Site Settings</h4>
-              <div className="flex flex-col gap-3">
-                <div>
-                  <label className="block text-[11px] text-zinc-400 mb-1">App Name</label>
-                  <input 
-                    type="text" 
-                    value={appName}
-                    onChange={(e) => setAppName(e.target.value)}
-                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none mb-2"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[11px] text-zinc-400 mb-1">Site URL</label>
-                  <input 
-                    type="text" 
-                    value={siteUrl}
-                    onChange={(e) => setSiteUrl(e.target.value)}
-                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[11px] text-zinc-400 mb-1">Icon URL</label>
-                  <input 
-                    type="text" 
-                    value={icon}
-                    onChange={(e) => setIcon(e.target.value)}
-                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
