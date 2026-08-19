@@ -3,15 +3,15 @@ import Link from 'next/link'
 
 export default function LoginPage({ searchParams }: { searchParams: { error?: string } }) {
   return (
-    <div className="min-h-screen bg-[#000000] text-[#ededed] flex flex-col items-center justify-center p-4 selection:bg-[#24b47e]/30">
+    <div className="min-h-screen bg-[#000000] text-[#ededed] flex flex-col items-center justify-center p-4 selection:bg-[#4A696C]/30">
       
       <Link href="/" className="flex items-center gap-2 mb-8 group">
-        <div className="w-8 h-8 rounded border border-[#333333] bg-[#111111] flex items-center justify-center group-hover:border-[#24b47e] transition-colors">
-          <svg className="w-4 h-4 text-[#24b47e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="w-8 h-8 rounded border border-[#333333] bg-[#111111] flex items-center justify-center group-hover:border-[#8BAAA8] transition-colors">
+          <svg className="w-4 h-4 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
           </svg>
         </div>
-        <span className="font-medium text-lg tracking-wide text-white group-hover:text-[#24b47e] transition-colors">PushHub</span>
+        <span className="font-medium text-lg tracking-wide text-white group-hover:text-[#8BAAA8] transition-colors">PushHub</span>
       </Link>
 
       <div className="w-full max-w-[400px] bg-[#111111] border border-[#333333] rounded-lg p-8 shadow-2xl">
@@ -44,7 +44,7 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
               type="email" 
               required 
               placeholder="you@example.com"
-              className="w-full bg-[#000000] border border-[#333333] rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#24b47e] transition-colors"
+              className="w-full bg-[#000000] border border-[#333333] rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors"
             />
           </div>
 
@@ -56,7 +56,7 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
               type="password" 
               required 
               placeholder="••••••••"
-              className="w-full bg-[#000000] border border-[#333333] rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#24b47e] transition-colors"
+              className="w-full bg-[#000000] border border-[#333333] rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors"
             />
           </div>
 
@@ -69,7 +69,7 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
           <div className="flex flex-col gap-2 mt-4">
             <button 
               formAction={login} 
-              className="w-full bg-[#24b47e] text-black font-medium rounded-md px-4 py-2 text-sm hover:bg-[#209f6e] transition-colors"
+              className="w-full bg-[#4A696C] text-white font-medium rounded-md px-4 py-2 text-sm hover:bg-[#3A5658] transition-colors"
             >
               Sign In
             </button>

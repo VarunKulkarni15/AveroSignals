@@ -103,12 +103,12 @@ export default function Dashboard({ params }: { params: { projectId: string } })
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#ededed] font-sans selection:bg-[#24b47e]/30">
+    <div className="min-h-screen bg-[#000000] text-[#ededed] font-sans selection:bg-[#4A696C]/30">
       <header className="border-b border-[#333333] bg-[#000000] px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link href="/dashboard" className="text-[#a1a1aa] hover:text-white mr-2">← Back</Link>
           <div className="w-8 h-8 rounded border border-[#333333] bg-[#111111] flex items-center justify-center">
-            <svg className="w-4 h-4 text-[#24b47e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
             </svg>
           </div>
@@ -127,7 +127,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#24b47e] transition-all"
+              className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all"
               placeholder="e.g. New Project Live!"
             />
           </div>
@@ -139,7 +139,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
               value={body}
               onChange={(e) => setBody(e.target.value)}
               rows={4}
-              className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#24b47e] transition-all resize-none"
+              className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all resize-none"
               placeholder="Check out my new portfolio update..."
             />
           </div>
@@ -220,14 +220,14 @@ export default function Dashboard({ params }: { params: { projectId: string } })
               className={`w-full font-medium py-3 px-4 rounded-md transition-all border ${
                 loading 
                   ? 'bg-[#111111] border-[#333333] text-[#666666] cursor-not-allowed' 
-                  : 'bg-[#111111] border-[#333333] hover:border-[#24b47e] text-[#ededed] hover:text-[#24b47e] hover:shadow-[0_0_15px_rgb(36,180,126,0.15)]'
+                  : 'bg-[#111111] border-[#333333] hover:border-[#8BAAA8] text-[#ededed] hover:text-[#8BAAA8] hover:shadow-[0_0_15px_rgb(139,170,168,0.15)]'
               }`}
             >
               {loading ? 'Broadcasting...' : 'Broadcast Notification'}
             </button>
             
             {status && (
-              <div className={`mt-4 p-3 rounded-md border text-sm ${status.includes('Error') || status.includes('Failed') ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-[#24b47e]/10 border-[#24b47e]/20 text-[#24b47e]'}`}>
+              <div className={`mt-4 p-3 rounded-md border text-sm ${status.includes('Error') || status.includes('Failed') ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-[#4A696C]/20 border-[#8BAAA8]/30 text-[#8BAAA8]'}`}>
                 {status}
               </div>
             )}

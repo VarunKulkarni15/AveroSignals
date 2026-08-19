@@ -17,11 +17,11 @@ export default async function DashboardPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#ededed] font-sans selection:bg-[#24b47e]/30">
+    <div className="min-h-screen bg-[#000000] text-[#ededed] font-sans selection:bg-[#4A696C]/30">
       <header className="border-b border-[#333333] bg-[#000000] px-8 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded border border-[#333333] bg-[#111111] flex items-center justify-center">
-            <svg className="w-4 h-4 text-[#24b47e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
@@ -40,11 +40,11 @@ export default async function DashboardPage() {
               name="name" 
               placeholder="Project Name..."
               required
-              className="bg-[#111111] border border-[#333333] rounded-md px-3 py-1.5 text-sm text-[#ededed] focus:outline-none focus:border-[#24b47e] transition-colors"
+              className="bg-[#111111] border border-[#333333] rounded-md px-3 py-1.5 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors"
             />
             <button 
               type="submit"
-              className="bg-[#111111] text-[#ededed] font-medium text-sm px-4 py-1.5 rounded-md border border-[#333333] hover:border-[#24b47e] hover:text-[#24b47e] transition-all"
+              className="bg-[#111111] text-[#ededed] font-medium text-sm px-4 py-1.5 rounded-md border border-[#333333] hover:border-[#8BAAA8] hover:text-[#8BAAA8] transition-all"
             >
               New Project
             </button>
@@ -62,9 +62,9 @@ export default async function DashboardPage() {
               <Link 
                 key={project.id} 
                 href={`/dashboard/${project.id}`}
-                className="group block bg-[#111111] border border-[#333333] rounded-xl p-6 hover:border-[#24b47e] transition-all hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(36,180,126,0.06)]"
+                className="group block bg-[#111111] border border-[#333333] rounded-xl p-6 hover:border-[#8BAAA8] transition-all hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(139,170,168,0.1)]"
               >
-                <h3 className="text-lg font-medium mb-2 text-white group-hover:text-[#24b47e] transition-colors">{project.name}</h3>
+                <h3 className="text-lg font-medium mb-2 text-white group-hover:text-[#8BAAA8] transition-colors">{project.name}</h3>
                 <div className="text-xs font-mono text-[#a1a1aa] bg-[#000000] border border-[#333333] px-2 py-1 rounded w-fit mb-4">
                   ID: {project.id}
                 </div>
