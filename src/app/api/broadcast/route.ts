@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { title, body, image, targetOS, scheduleTime, projectId } = await req.json();
+    const { title, body, image, targetOS, targetRegion, scheduleTime, projectId } = await req.json();
 
     if (!projectId) {
       return NextResponse.json({ error: 'Project ID is required' }, { status: 400 });
@@ -36,6 +36,10 @@ export async function POST(req: Request) {
 
     if (targetOS && targetOS !== 'All') {
       subscriptions = subscriptions.filter(sub => sub.metadata?.os === targetOS);
+    }
+
+    if (targetRegion && targetRegion !== 'All') {
+      subscriptions = subscriptions.filter(sub => sub.metadata?.timezone?.includes(targetRegion));
     }
 
     if (subscriptions.length === 0) {

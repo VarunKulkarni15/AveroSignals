@@ -21,6 +21,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
   const [previewOS, setPreviewOS] = useState<'windows' | 'mac' | 'android' | 'ios'>('windows');
   
   const [targetOS, setTargetOS] = useState('All');
+  const [targetRegion, setTargetRegion] = useState('All');
   const [scheduleTime, setScheduleTime] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   
@@ -111,7 +112,8 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
           title, 
           body, 
           image, 
-          targetOS, 
+          targetOS,
+          targetRegion, 
           scheduleTime,
           projectId 
         }),
@@ -326,6 +328,20 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                     <option value="Mac">Mac Users Only</option>
                     <option value="Android">Android Users Only</option>
                     <option value="iOS">iOS Users Only</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Target Region</label>
+                  <select 
+                    value={targetRegion}
+                    onChange={(e) => setTargetRegion(e.target.value)}
+                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none"
+                  >
+                    <option value="All">Global (All Regions)</option>
+                    <option value="America">Americas (US, CA, SA)</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Australia">Oceania / Australia</option>
                   </select>
                 </div>
                 <div>
