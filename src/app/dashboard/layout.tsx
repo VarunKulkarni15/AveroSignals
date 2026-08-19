@@ -15,7 +15,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#1c3031] via-[#000000_60%] to-[#000000] text-[#ededed] font-sans flex">
+    <div className="min-h-screen bg-[#000000] bg-[radial-gradient(ellipse_at_top_left,#1c3031_0%,transparent_60%)] text-[#ededed] font-sans flex">
       {/* Global Sidebar */}
       <Sidebar email={user.email!} avatarUrl={user.user_metadata?.avatar_url} />
 
