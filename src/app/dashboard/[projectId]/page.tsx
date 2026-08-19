@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import NotificationPreview from '@/components/NotificationPreview';
+import { updateProjectSettings, deleteProject } from './actions';
 
 export default function Dashboard({ params }: { params: { projectId: string } }) {
   const [title, setTitle] = useState('');
@@ -19,6 +20,10 @@ export default function Dashboard({ params }: { params: { projectId: string } })
   const [targetOS, setTargetOS] = useState('All');
   const [scheduleTime, setScheduleTime] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
+  
+  const [settingsLoading, setSettingsLoading] = useState(false);
+  const [settingsStatus, setSettingsStatus] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     // Fetch actual site metadata from the backend
@@ -107,6 +112,34 @@ export default function Dashboard({ params }: { params: { projectId: string } })
       setStatus('Failed to send broadcast.');
     }
     setLoading(false);
+  };
+
+  const handleSaveSettings = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSettingsLoading(true);
+    setSettingsStatus('Saving...');
+    
+    try {
+      const formData = new FormData(e.currentTarget);
+      const res = await updateProjectSettings(params.projectId, formData);
+      if (res.error) setSettingsStatus(`Error: ${res.error}`);
+      else setSettingsStatus('Settings saved successfully!');
+    } catch (err) {
+      setSettingsStatus('Error saving settings.');
+    } finally {
+      setSettingsLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!confirm('Are you absolutely sure you want to delete this project? This cannot be undone.')) return;
+    setIsDeleting(true);
+    try {
+      await deleteProject(params.projectId);
+    } catch (err) {
+      alert('Failed to delete project');
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -304,6 +337,64 @@ export default function Dashboard({ params }: { params: { projectId: string } })
           </div>
         </div>
       </div>
+
+      <div className="mt-12 bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#333333] rounded-xl overflow-hidden shadow-2xl">
+        <div className="border-b border-[#333333] px-8 py-5 bg-[#111111]/50">
+          <h2 className="text-lg font-medium text-white">Project Settings</h2>
+        </div>
+        
+        <div className="p-8">
+          <form onSubmit={handleSaveSettings} className="max-w-2xl space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-zinc-300 mb-2">Project Name</label>
+              <input 
+                type="text" 
+                name="name"
+                value={appName}
+                onChange={(e) => setAppName(e.target.value)}
+                className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#8BAAA8] transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-zinc-300 mb-2">Site URL</label>
+              <input 
+                type="url" 
+                name="site_url"
+                value={siteUrl}
+                onChange={(e) => setSiteUrl(e.target.value)}
+                className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#8BAAA8] transition-colors"
+              />
+              <p className="text-xs text-zinc-500 mt-2">Make sure to include https://</p>
+            </div>
+            
+            <div className="flex items-center gap-4 pt-2">
+              <button 
+                type="submit" 
+                disabled={settingsLoading}
+                className="bg-[#ededed] text-[#000000] font-medium text-sm px-6 py-2.5 rounded-lg hover:bg-white transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)] disabled:opacity-50"
+              >
+                {settingsLoading ? 'Saving...' : 'Save Changes'}
+              </button>
+              {settingsStatus && (
+                <span className={`text-sm ${settingsStatus.includes('Error') ? 'text-red-400' : 'text-[#8BAAA8]'}`}>
+                  {settingsStatus}
+                </span>
+              )}
+            </div>
+          </form>
+
+          <div className="mt-12 pt-8 border-t border-red-500/20">
+            <h3 className="text-red-400 font-medium mb-2">Danger Zone</h3>
+            <p className="text-sm text-zinc-500 mb-4">Permanently delete this project and all of its subscribers and broadcast history. This action cannot be undone.</p>
+            <button 
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 hover:border-red-500/30 font-medium text-sm px-6 py-2.5 rounded-lg transition-colors disabled:opacity-50"
+            >
+              {isDeleting ? 'Deleting...' : 'Delete Project'}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { revalidatePath } from 'next/cache'
 import CreateProjectForm from './CreateProjectForm'
-import UserDropdown from '@/components/UserDropdown'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -37,26 +36,16 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#ededed] font-sans selection:bg-[#4A696C]/30">
-      <header className="border-b border-[#333333] bg-[#000000] px-8 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded border border-[#333333] bg-[#111111] flex items-center justify-center">
-            <svg className="w-4 h-4 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          <h1 className="font-medium text-lg tracking-wide text-white">PushHub Dashboard</h1>
+    <div className="max-w-6xl mx-auto px-8 py-12 animate-in fade-in duration-500">
+      <div className="flex justify-between items-center mb-10">
+        <div>
+          <h1 className="text-3xl font-semibold text-white tracking-tight mb-2">Projects</h1>
+          <p className="text-[#a1a1aa] text-sm">Manage your applications and broadcast push notifications.</p>
         </div>
-        <UserDropdown email={user!.email!} />
-      </header>
+        <CreateProjectForm createProject={createProject} />
+      </div>
 
-      <main className="max-w-5xl mx-auto px-8 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-xl font-medium text-white">Your Projects</h2>
-          <CreateProjectForm createProject={createProject} />
-        </div>
-
-        {(!projects || projects.length === 0) ? (
+      {(!projects || projects.length === 0) ? (
           <div className="border border-[#333333] border-dashed rounded-xl p-12 text-center bg-[#111111]/50">
             <div className="w-16 h-16 bg-[#1a1a1a] rounded-full mx-auto mb-4 flex items-center justify-center border border-[#333333]">
               <svg className="w-8 h-8 text-[#666666]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -72,49 +61,49 @@ export default async function DashboardPage() {
               <Link 
                 key={project.id} 
                 href={`/dashboard/${project.id}`}
-                className="group flex flex-col bg-[#0a0a0a] border border-[#333333] rounded-xl overflow-hidden hover:border-[#666666] transition-all hover:-translate-y-1 hover:shadow-2xl"
+                className="group flex flex-col bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#333333] rounded-xl overflow-hidden hover:border-[#8BAAA8] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(139,170,168,0.15)]"
               >
-                <div className="p-6 flex-1">
+                <div className="p-5 flex-1">
                   <div className="flex items-start justify-between mb-4">
                     {project.site_url ? (
                       <img 
                         src={`https://www.google.com/s2/favicons?domain=${project.site_url}&sz=64`} 
                         alt="Project Icon" 
-                        className="w-10 h-10 rounded-full border border-[#333333] bg-[#000000] object-contain p-1"
+                        className="w-9 h-9 rounded-full border border-[#333333] bg-[#000000] object-contain p-1"
                       />
                     ) : (
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#4A696C] to-[#2c3e40] flex items-center justify-center text-white font-bold text-lg shadow-inner">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4A696C] to-[#2c3e40] flex items-center justify-center text-white font-bold text-base shadow-inner">
                         {project.name.charAt(0).toUpperCase()}
                       </div>
                     )}
-                    <div className="bg-[#111111] border border-[#333333] px-2 py-1 rounded text-xs font-mono text-[#a1a1aa] flex items-center gap-1.5 cursor-pointer hover:text-white transition-colors">
+                    <div className="bg-[#111111] border border-[#333333] px-2 py-1 rounded text-[11px] font-mono text-[#a1a1aa] flex items-center gap-1.5 group-hover:text-[#8BAAA8] transition-colors">
                       ID: {project.id.split('-')[0]}...
                     </div>
                   </div>
                   
-                  <h3 className="text-lg font-medium text-[#ededed] mb-1">{project.name}</h3>
-                  <div className="flex items-center text-sm text-[#a1a1aa] gap-1.5 mb-6">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <h3 className="text-base font-medium text-[#ededed] mb-1">{project.name}</h3>
+                  <div className="flex items-center text-xs text-[#a1a1aa] gap-1.5 mb-5">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                     </svg>
                     {project.site_url ? project.site_url.replace(/^https?:\/\//, '') : 'No URL set'}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-[#111111] rounded-lg p-3 border border-[#222222]">
-                      <div className="text-xs text-[#666666] font-medium uppercase tracking-wider mb-1">Subscribers</div>
-                      <div className="text-xl text-[#ededed] font-semibold">0</div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-[#111111] rounded-lg p-2.5 border border-[#222222]">
+                      <div className="text-[10px] text-[#666666] font-medium uppercase tracking-wider mb-1">Subscribers</div>
+                      <div className="text-lg text-[#ededed] font-semibold">0</div>
                     </div>
-                    <div className="bg-[#111111] rounded-lg p-3 border border-[#222222]">
-                      <div className="text-xs text-[#666666] font-medium uppercase tracking-wider mb-1">Broadcasts</div>
-                      <div className="text-xl text-[#ededed] font-semibold">0</div>
+                    <div className="bg-[#111111] rounded-lg p-2.5 border border-[#222222]">
+                      <div className="text-[10px] text-[#666666] font-medium uppercase tracking-wider mb-1">Broadcasts</div>
+                      <div className="text-lg text-[#ededed] font-semibold">0</div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="border-t border-[#333333] bg-[#111111] px-6 py-3 flex justify-between items-center group-hover:bg-[#1a1a1a] transition-colors">
-                  <span className="text-sm font-medium text-[#ededed]">Manage Project</span>
-                  <svg className="w-4 h-4 text-[#666666] group-hover:text-[#ededed] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="border-t border-[#333333] bg-[#111111] px-5 py-2.5 flex justify-between items-center group-hover:bg-[#1a1a1a] transition-colors">
+                  <span className="text-xs font-medium text-[#ededed]">Manage Project</span>
+                  <svg className="w-4 h-4 text-[#666666] group-hover:text-[#8BAAA8] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -122,7 +111,6 @@ export default async function DashboardPage() {
             ))}
           </div>
         )}
-      </main>
     </div>
   )
 }

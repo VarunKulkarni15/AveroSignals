@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { logout } from '@/app/login/actions'
 
-export default function UserDropdown({ email }: { email: string }) {
+export default function UserDropdown({ email, avatarUrl }: { email: string, avatarUrl?: string }) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -21,9 +21,13 @@ export default function UserDropdown({ email }: { email: string }) {
     <div className="relative" ref={dropdownRef}>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4A696C] to-[#2c3e40] flex items-center justify-center text-white font-medium text-sm border border-[#333333] hover:border-[#666666] transition-colors overflow-hidden"
+        className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4A696C] to-[#2c3e40] flex items-center justify-center text-white font-medium text-sm border border-[#333333] hover:border-[#666666] transition-colors overflow-hidden shrink-0 p-0"
       >
-        {email.charAt(0).toUpperCase()}
+        {avatarUrl ? (
+          <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+        ) : (
+          email.charAt(0).toUpperCase()
+        )}
       </button>
 
       {isOpen && (
