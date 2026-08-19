@@ -7,6 +7,7 @@ import UserDropdown from './UserDropdown'
 
 export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl?: string }) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
   const pathname = usePathname()
 
   const navItems = [
@@ -119,7 +120,8 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
               onClick={(e) => {
                 if ((item as any).isPro) {
                   e.preventDefault();
-                  alert(`${item.name} is a Pro feature and is currently in development! Upgrade coming soon.`);
+                  setToastMessage(`${item.name} is currently in development! Upgrade coming soon.`);
+                  setTimeout(() => setToastMessage(null), 3000);
                 }
               }}
               className={`flex items-center justify-between px-2 py-2.5 rounded-lg transition-colors overflow-hidden whitespace-nowrap group
@@ -135,9 +137,11 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
                 </span>
               </div>
               {(item as any).isPro && (
-                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#8BAAA8]/10 text-[#8BAAA8] border border-[#8BAAA8]/20 transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
-                  PRO
-                </span>
+                <div className={`text-[#8BAAA8] opacity-50 group-hover:opacity-100 transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`} title="Coming Soon">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
               )}
             </Link>
           )
@@ -145,12 +149,22 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
       </nav>
 
       {/* User Area */}
-      <div className="p-3 border-t border-border-main flex items-center overflow-hidden whitespace-nowrap">
+      <div className="p-3 border-t border-border-main flex items-center overflow-hidden whitespace-nowrap relative">
         <UserDropdown email={email} avatarUrl={avatarUrl} />
         <span className={`ml-3 text-sm text-[#a1a1aa] truncate transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
           {email}
         </span>
       </div>
+
+      {/* Custom Toast Alert */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-[#1a1a1a] border border-[#333333] shadow-2xl rounded-lg px-4 py-3 flex items-center gap-3 z-50 animate-in slide-in-from-bottom-4 duration-300">
+          <svg className="w-5 h-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <p className="text-sm font-medium text-white">{toastMessage}</p>
+        </div>
+      )}
     </aside>
   )
 }
