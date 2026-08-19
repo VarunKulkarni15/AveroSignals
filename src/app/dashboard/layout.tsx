@@ -2,7 +2,6 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import Sidebar from '@/components/Sidebar'
 import UserDropdown from '@/components/UserDropdown'
-import ThemeTweaker from '@/components/ThemeTweaker'
 
 export default async function DashboardLayout({
   children,
@@ -25,7 +24,6 @@ export default async function DashboardLayout({
       <main className="flex-1 overflow-y-auto">
         {children}
       </main>
-      <ThemeTweaker />
     </div>
   )
 }

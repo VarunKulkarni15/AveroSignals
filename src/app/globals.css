@@ -3,13 +3,13 @@
 :root {
   /* HSL Variables for Theme Tweaker */
   --brand-h: 178;
-  --brand-s: 15%;
+  --brand-s: 16%;
   --brand-l: 60%;
   
   --bg-h: 178;
-  --bg-s: 15%;
+  --bg-s: 16%;
   
-  --bg-main-l: 0%;    /* Pitch Black #000000 by default */
+  --bg-main-l: 2%;    /* Pitch Black #000000 by default */
   --bg-card-l: 4%;    /* Dark Gray #0a0a0a by default */
   --bg-input-l: 7%;   /* Input #111111 by default */
   --border-l: 12%;    /* Border #222222 by default */
