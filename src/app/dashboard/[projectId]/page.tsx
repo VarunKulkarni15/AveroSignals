@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createBrowserClient } from '@supabase/ssr';
 import NotificationPreview from '@/components/NotificationPreview';
-import { updateProjectSettings, deleteProject, generateApiKey, grantQuota } from './actions';
+import { updateProjectSettings, deleteProject } from './actions';
+import { generateApiKey, grantQuota } from '../actions';
 
 export default function Dashboard({ params }: { params: Promise<{ projectId: string }> }) {
   const { projectId } = use(params);
