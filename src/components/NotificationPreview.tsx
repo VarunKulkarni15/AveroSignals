@@ -24,7 +24,7 @@ export default function NotificationPreview({ title, body, image, appName, siteU
 
   if (os === 'windows') {
     return (
-      <div className="relative w-full max-w-[480px] h-[320px] bg-[#001940] rounded-xl overflow-hidden shadow-2xl border border-border-main font-sans flex flex-col mx-auto">
+      <div className="relative w-full max-w-[600px] h-[340px] bg-[#001940] rounded-xl overflow-hidden shadow-2xl border border-border-main font-sans flex flex-col mx-auto">
         {/* Desktop Area */}
         <div className="flex-1 relative">
           {/* Notification Card - NO ANIMATION for instant switching */}
@@ -85,7 +85,7 @@ export default function NotificationPreview({ title, body, image, appName, siteU
 
   if (os === 'mac') {
     return (
-      <div className="relative w-full max-w-[420px] h-[320px] bg-gradient-to-tr from-pink-400 via-purple-300 to-cyan-300 rounded-xl overflow-hidden shadow-2xl border border-border-main font-sans flex flex-col mx-auto">
+      <div className="relative w-full max-w-[600px] h-[340px] bg-gradient-to-tr from-pink-400 via-purple-300 to-cyan-300 rounded-xl overflow-hidden shadow-2xl border border-border-main font-sans flex flex-col mx-auto">
         {/* macOS Menu Bar */}
         <div className="h-6 bg-black/10 flex items-center justify-between px-3 text-white text-[12px] font-medium shrink-0">
           <div className="flex items-center gap-3">
