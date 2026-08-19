@@ -21,7 +21,7 @@ export default function NotificationPreview({ title, body, image, appName, siteU
 
   if (os === 'windows') {
     return (
-      <div className="w-[360px] bg-[#202020] border border-[#333333] rounded-lg shadow-2xl flex flex-col overflow-hidden text-left font-sans mx-auto pb-3">
+      <div className="w-[360px] bg-[#202020] border border-border-main rounded-lg shadow-2xl flex flex-col overflow-hidden text-left font-sans mx-auto pb-3">
         <div className="flex items-center justify-between px-3 py-2">
           <div className="flex items-center gap-2">
             <div className="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-green-400 via-yellow-400 to-red-500 p-[2px]">

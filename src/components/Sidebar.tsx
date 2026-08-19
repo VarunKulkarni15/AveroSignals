@@ -42,12 +42,12 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
 
   return (
     <aside 
-      className={`h-screen sticky top-0 bg-[#000000] border-r border-[#333333] z-40 transition-all duration-300 flex flex-col shrink-0 ${isExpanded ? 'w-64' : 'w-16'}`}
+      className={`h-screen sticky top-0 bg-bg-main border-r border-border-main z-40 transition-all duration-300 flex flex-col shrink-0 ${isExpanded ? 'w-64' : 'w-16'}`}
     >
       {/* Logo & Toggle Area */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-[#333333] relative">
+      <div className="h-16 flex items-center justify-between px-4 border-b border-border-main relative">
         <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
-          <div className="w-8 h-8 shrink-0 rounded border border-[#333333] bg-[#111111] flex items-center justify-center">
+          <div className="w-8 h-8 shrink-0 rounded border border-border-main bg-bg-input flex items-center justify-center">
             <svg className="w-4 h-4 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -59,7 +59,7 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
         
         <button 
           onClick={() => setIsExpanded(!isExpanded)} 
-          className={`absolute -right-3 top-5 bg-[#111111] border border-[#333333] rounded-full p-1 text-[#a1a1aa] hover:text-white hover:border-[#666666] transition-colors z-50 flex items-center justify-center`}
+          className={`absolute -right-3 top-5 bg-bg-input border border-border-main rounded-full p-1 text-[#a1a1aa] hover:text-white hover:border-[#666666] transition-colors z-50 flex items-center justify-center`}
           title={isExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
         >
           <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -77,7 +77,7 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
               key={item.name}
               href={item.href}
               className={`flex items-center gap-3 px-2 py-2.5 rounded-lg transition-colors overflow-hidden whitespace-nowrap group
-                ${isActive ? 'bg-[#111111] text-white' : 'text-[#a1a1aa] hover:bg-[#111111] hover:text-white'}
+                ${isActive ? 'bg-bg-input text-white' : 'text-[#a1a1aa] hover:bg-bg-input hover:text-white'}
               `}
             >
               <div className={`${isActive ? 'text-[#8BAAA8]' : 'text-[#666666] group-hover:text-white'} transition-colors`}>
@@ -92,7 +92,7 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
       </nav>
 
       {/* User Area */}
-      <div className="p-3 border-t border-[#333333] flex items-center overflow-hidden whitespace-nowrap">
+      <div className="p-3 border-t border-border-main flex items-center overflow-hidden whitespace-nowrap">
         <UserDropdown email={email} avatarUrl={avatarUrl} />
         <span className={`ml-3 text-sm text-[#a1a1aa] truncate transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
           {email}

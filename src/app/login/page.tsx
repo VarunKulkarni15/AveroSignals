@@ -67,10 +67,10 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#ededed] flex flex-col items-center justify-center p-4 selection:bg-[#4A696C]/30">
+    <div className="min-h-screen bg-bg-main text-[#ededed] flex flex-col items-center justify-center p-4 selection:bg-[#4A696C]/30">
       
       <Link href="/" className="flex items-center gap-2 mb-8 group">
-        <div className="w-8 h-8 rounded border border-[#333333] bg-[#111111] flex items-center justify-center group-hover:border-[#8BAAA8] transition-colors">
+        <div className="w-8 h-8 rounded border border-border-main bg-bg-input flex items-center justify-center group-hover:border-[#8BAAA8] transition-colors">
           <svg className="w-4 h-4 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
           </svg>
@@ -78,7 +78,7 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
         <span className="font-medium text-lg tracking-wide text-white group-hover:text-[#8BAAA8] transition-colors">PushHub</span>
       </Link>
 
-      <div className="w-full max-w-[400px] bg-[#111111] border border-[#333333] rounded-lg p-8 shadow-2xl">
+      <div className="w-full max-w-[400px] bg-bg-input border border-border-main rounded-lg p-8 shadow-2xl">
         <h2 className="text-xl font-medium text-white mb-6">
           {isSignUp ? 'Create your account' : 'Welcome back'}
         </h2>
@@ -91,7 +91,7 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
               setIsGoogleLoading(true);
               await signInWithGoogle(); 
             }}
-            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-md border border-[#333333] bg-[#0a0a0a] hover:border-[#8BAAA8] hover:shadow-[0_0_15px_rgba(139,170,168,0.15)] text-[#ededed] text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-md border border-border-main bg-bg-card hover:border-[#8BAAA8] hover:shadow-[0_0_15px_rgba(139,170,168,0.15)] text-[#ededed] text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGoogleLoading ? (
               <div className="w-5 h-5 border-2 border-zinc-500 border-t-[#8BAAA8] rounded-full animate-spin" />
@@ -113,7 +113,7 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
               setIsGithubLoading(true);
               await signInWithGithub(); 
             }}
-            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-md border border-[#333333] bg-[#0a0a0a] hover:border-[#8BAAA8] hover:shadow-[0_0_15px_rgba(139,170,168,0.15)] text-[#ededed] text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-md border border-border-main bg-bg-card hover:border-[#8BAAA8] hover:shadow-[0_0_15px_rgba(139,170,168,0.15)] text-[#ededed] text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGithubLoading ? (
               <div className="w-5 h-5 border-2 border-zinc-500 border-t-[#8BAAA8] rounded-full animate-spin" />
@@ -127,9 +127,9 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
         </div>
 
         <div className="flex items-center gap-3 mb-6">
-          <hr className="flex-1 border-[#333333]" />
+          <hr className="flex-1 border-border-main" />
           <span className="text-xs text-[#a1a1aa] uppercase tracking-wider">Or</span>
-          <hr className="flex-1 border-[#333333]" />
+          <hr className="flex-1 border-border-main" />
         </div>
 
         <form className="flex flex-col gap-4" noValidate onSubmit={handleSubmit}>
@@ -142,7 +142,7 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className={`w-full bg-[#000000] border ${validationError.includes('email') ? 'border-red-500/50' : 'border-[#333333]'} rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors`}
+              className={`w-full bg-bg-main border ${validationError.includes('email') ? 'border-red-500/50' : 'border-border-main'} rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors`}
             />
           </div>
 
@@ -155,7 +155,7 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className={`w-full bg-[#000000] border ${validationError.includes('password') ? 'border-red-500/50' : 'border-[#333333]'} rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors`}
+              className={`w-full bg-bg-main border ${validationError.includes('password') ? 'border-red-500/50' : 'border-border-main'} rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors`}
             />
           </div>
 

@@ -46,8 +46,8 @@ export default function CreateProjectForm({ createProject }: { createProject: (f
 
       {isOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#111111] border border-[#333333] rounded-xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <div className="px-6 py-4 border-b border-[#333333] flex justify-between items-center">
+          <div className="bg-bg-input border border-border-main rounded-xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-6 py-4 border-b border-border-main flex justify-between items-center">
               <h3 className="text-lg font-medium text-white">Create New Project</h3>
               <button onClick={() => setIsOpen(false)} className="text-[#a1a1aa] hover:text-white transition-colors">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,7 +63,7 @@ export default function CreateProjectForm({ createProject }: { createProject: (f
                   type="text" 
                   name="name" 
                   placeholder="e.g. My Portfolio"
-                  className={`w-full bg-[#000000] border ${error.includes('fields') ? 'border-red-500/50' : 'border-[#333333]'} rounded-lg px-4 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all`}
+                  className={`w-full bg-bg-main border ${error.includes('fields') ? 'border-red-500/50' : 'border-border-main'} rounded-lg px-4 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all`}
                 />
               </div>
 
@@ -73,7 +73,7 @@ export default function CreateProjectForm({ createProject }: { createProject: (f
                   type="url" 
                   name="site_url" 
                   placeholder="https://example.com"
-                  className={`w-full bg-[#000000] border ${error.includes('fields') ? 'border-red-500/50' : 'border-[#333333]'} rounded-lg px-4 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all`}
+                  className={`w-full bg-bg-main border ${error.includes('fields') ? 'border-red-500/50' : 'border-border-main'} rounded-lg px-4 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all`}
                 />
                 <p className="text-xs text-zinc-500 mt-2">The domain where you will install the PushHub script.</p>
               </div>
@@ -88,7 +88,7 @@ export default function CreateProjectForm({ createProject }: { createProject: (f
                 <button 
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 bg-transparent border border-[#333333] text-[#ededed] font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-[#1a1a1a] transition-all"
+                  className="flex-1 bg-transparent border border-border-main text-[#ededed] font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-[#1a1a1a] transition-all"
                 >
                   Cancel
                 </button>

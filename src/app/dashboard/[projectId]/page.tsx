@@ -187,7 +187,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                 navigator.clipboard.writeText(projectId);
                 alert('Project ID copied to clipboard!');
               }}
-              className="text-[#8BAAA8] hover:text-white transition-colors bg-[#111111] border border-[#333333] rounded px-2 py-1 text-xs flex items-center gap-1"
+              className="text-[#8BAAA8] hover:text-white transition-colors bg-bg-input border border-border-main rounded px-2 py-1 text-xs flex items-center gap-1"
             >
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -199,16 +199,16 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
       </div>
       
       {/* Quick Start Guide */}
-      <div className="mb-10 bg-[#111111]/50 border border-[#8BAAA8]/20 rounded-xl p-6">
+      <div className="mb-10 bg-bg-input/50 border border-[#8BAAA8]/20 rounded-xl p-6">
         <h2 className="text-lg font-medium text-white mb-2 flex items-center gap-2">
           <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
           Quick Start Installation
         </h2>
-        <p className="text-sm text-[#a1a1aa] mb-4">Paste this script tag anywhere in the <code className="text-[#8BAAA8] bg-[#000000] px-1 py-0.5 rounded">&lt;head&gt;</code> of your website to enable push notifications. It will automatically detect your Site URL and Favicon!</p>
+        <p className="text-sm text-[#a1a1aa] mb-4">Paste this script tag anywhere in the <code className="text-[#8BAAA8] bg-bg-main px-1 py-0.5 rounded">&lt;head&gt;</code> of your website to enable push notifications. It will automatically detect your Site URL and Favicon!</p>
         <div className="relative group">
-          <pre className="bg-[#000000] border border-[#333333] p-4 rounded-lg overflow-x-auto text-sm text-[#ededed] font-mono whitespace-pre-wrap break-all">
+          <pre className="bg-bg-main border border-border-main p-4 rounded-lg overflow-x-auto text-sm text-[#ededed] font-mono whitespace-pre-wrap break-all">
             {scriptTag || 'Loading...'}
           </pre>
           <button 
@@ -216,7 +216,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
               navigator.clipboard.writeText(scriptTag);
               alert('Script copied to clipboard!');
             }}
-            className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-[#111111] border border-[#333333] rounded px-3 py-1.5 text-xs text-[#a1a1aa] hover:text-white"
+            className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-bg-input border border-border-main rounded px-3 py-1.5 text-xs text-[#a1a1aa] hover:text-white"
           >
             Copy Code
           </button>
@@ -225,29 +225,29 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
 
       {/* Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div className="bg-[#0a0a0a] border border-[#333333] rounded-xl p-6 flex items-center justify-between">
+        <div className="bg-bg-card border border-border-main rounded-xl p-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Total Subscribers</p>
             <p className="text-2xl font-semibold text-white">{subscriberCount}</p>
           </div>
-          <div className="w-10 h-10 rounded-full bg-[#111111] border border-[#333333] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-bg-input border border-border-main flex items-center justify-center">
             <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
           </div>
         </div>
-        <div className="bg-[#0a0a0a] border border-[#333333] rounded-xl p-6 flex items-center justify-between">
+        <div className="bg-bg-card border border-border-main rounded-xl p-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Total Broadcasts</p>
             <p className="text-2xl font-semibold text-white">{broadcastCount}</p>
           </div>
-          <div className="w-10 h-10 rounded-full bg-[#111111] border border-[#333333] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-bg-input border border-border-main flex items-center justify-center">
             <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
             </svg>
           </div>
         </div>
-        <div className="bg-[#0a0a0a] border border-[#333333] rounded-xl p-6 flex items-center justify-between">
+        <div className="bg-bg-card border border-border-main rounded-xl p-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Status</p>
             <p className="text-2xl font-semibold text-[#8BAAA8] flex items-center gap-2">
@@ -255,7 +255,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
               Active
             </p>
           </div>
-          <div className="w-10 h-10 rounded-full bg-[#111111] border border-[#333333] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-bg-input border border-border-main flex items-center justify-center">
             <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" />
             </svg>
@@ -264,7 +264,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        <div className="flex-1 bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#333333] rounded-xl p-8 shadow-2xl">
+        <div className="flex-1 bg-bg-card/80 backdrop-blur-sm border border-border-main rounded-xl p-8 shadow-2xl">
           <form onSubmit={handleBroadcast} className="space-y-6" noValidate>
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-2">Notification Title</label>
@@ -272,7 +272,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
               type="text" 
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className={`w-full bg-[#111111] border ${status?.includes('fill') ? 'border-red-500/50' : 'border-[#333333]'} rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all`}
+              className={`w-full bg-bg-input border ${status?.includes('fill') ? 'border-red-500/50' : 'border-border-main'} rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all`}
               placeholder="e.g. New Project Live!"
             />
           </div>
@@ -283,7 +283,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
               value={body}
               onChange={(e) => setBody(e.target.value)}
               rows={4}
-              className={`w-full bg-[#111111] border ${status?.includes('fill') ? 'border-red-500/50' : 'border-[#333333]'} rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all resize-none`}
+              className={`w-full bg-bg-input border ${status?.includes('fill') ? 'border-red-500/50' : 'border-border-main'} rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all resize-none`}
               placeholder="Check out my new portfolio update..."
             />
           </div>
@@ -296,36 +296,36 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                 accept="image/*"
                 onChange={handleFileChange}
                 disabled={loading}
-                className="text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#111111] file:text-white hover:file:bg-[#222222] transition-all cursor-pointer disabled:opacity-50"
+                className="text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-bg-input file:text-white hover:file:bg-[#222222] transition-all cursor-pointer disabled:opacity-50"
               />
               {status === 'Uploading image...' && (
                 <p className="text-sm text-zinc-400 animate-pulse">Uploading...</p>
               )}
               {image && status !== 'Uploading image...' && (
-                <div className="relative mt-2 rounded-lg overflow-hidden border border-[#333333] bg-[#111111] w-full max-w-sm aspect-video">
+                <div className="relative mt-2 rounded-lg overflow-hidden border border-border-main bg-bg-input w-full max-w-sm aspect-video">
                   <img src={image} alt="Preview" className="object-cover w-full h-full" />
                 </div>
               )}
             </div>
           </div>
 
-          <div className="border border-[#333333] rounded-lg overflow-hidden bg-[#0a0a0a]">
+          <div className="border border-border-main rounded-lg overflow-hidden bg-bg-card">
             <button 
               type="button" 
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="w-full px-4 py-3 flex items-center justify-between text-sm font-semibold text-zinc-300 hover:bg-[#111111] transition-colors"
+              className="w-full px-4 py-3 flex items-center justify-between text-sm font-semibold text-zinc-300 hover:bg-bg-input transition-colors"
             >
               Advanced Settings (Segments & Scheduling)
               <span>{showAdvanced ? '▲' : '▼'}</span>
             </button>
             {showAdvanced && (
-              <div className="p-4 border-t border-[#333333] flex flex-col gap-4">
+              <div className="p-4 border-t border-border-main flex flex-col gap-4">
                 <div>
                   <label className="block text-xs font-medium text-zinc-400 mb-1">Target Audience (Segment)</label>
                   <select 
                     value={targetOS}
                     onChange={(e) => setTargetOS(e.target.value)}
-                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none"
+                    className="w-full bg-bg-input border border-border-main rounded px-3 py-2 text-sm text-white focus:outline-none"
                   >
                     <option value="All">All Users</option>
                     <option value="Windows">Windows Users Only</option>
@@ -339,7 +339,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                   <select 
                     value={targetRegion}
                     onChange={(e) => setTargetRegion(e.target.value)}
-                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none"
+                    className="w-full bg-bg-input border border-border-main rounded px-3 py-2 text-sm text-white focus:outline-none"
                   >
                     <option value="All">Global (All Regions)</option>
                     <option value="America">Americas (US, CA, SA)</option>
@@ -355,7 +355,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                       type="datetime-local" 
                       value={scheduleTime}
                       onChange={(e) => setScheduleTime(e.target.value)}
-                      className="flex-1 bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none [color-scheme:dark]"
+                      className="flex-1 bg-bg-input border border-border-main rounded px-3 py-2 text-sm text-white focus:outline-none [color-scheme:dark]"
                     />
                     {scheduleTime && (
                       <button 
@@ -377,8 +377,8 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
               disabled={loading}
               className={`w-full font-medium py-3 px-4 rounded-md transition-all border ${
                 loading 
-                  ? 'bg-[#111111] border-[#333333] text-[#666666] cursor-not-allowed' 
-                  : 'bg-[#111111] border-[#333333] hover:border-[#8BAAA8] text-[#ededed] hover:text-[#8BAAA8] hover:shadow-[0_0_15px_rgb(139,170,168,0.15)]'
+                  ? 'bg-bg-input border-border-main text-[#666666] cursor-not-allowed' 
+                  : 'bg-bg-input border-border-main hover:border-[#8BAAA8] text-[#ededed] hover:text-[#8BAAA8] hover:shadow-[0_0_15px_rgb(139,170,168,0.15)]'
               }`}
             >
               {loading ? 'Broadcasting...' : 'Broadcast Notification'}
@@ -393,10 +393,10 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
         </div>
 
         <div className="w-full lg:w-1/3 flex flex-col items-center">
-          <div className="w-full max-w-sm bg-[#000000] border border-[#333333] rounded-lg p-6">
+          <div className="w-full max-w-sm bg-bg-main border border-border-main rounded-lg p-6">
             <h3 className="text-white font-semibold mb-4 text-center">Live Preview</h3>
             
-            <div className="flex items-center justify-center gap-2 mb-6 bg-[#111111] p-1 rounded-lg">
+            <div className="flex items-center justify-center gap-2 mb-6 bg-bg-input p-1 rounded-lg">
               {(['windows', 'mac', 'android', 'ios'] as const).map((os) => (
                 <button
                   key={os}
@@ -425,8 +425,8 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
         </div>
       </div>
 
-      <div className="mt-12 bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#333333] rounded-xl overflow-hidden shadow-2xl">
-        <div className="border-b border-[#333333] px-8 py-5 bg-[#111111]/50">
+      <div className="mt-12 bg-bg-card/80 backdrop-blur-sm border border-border-main rounded-xl overflow-hidden shadow-2xl">
+        <div className="border-b border-border-main px-8 py-5 bg-bg-input/50">
           <h2 className="text-lg font-medium text-white">Project Settings</h2>
         </div>
         
@@ -439,7 +439,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                 name="name"
                 value={appName}
                 onChange={(e) => setAppName(e.target.value)}
-                className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#8BAAA8] transition-colors"
+                className="w-full bg-bg-input border border-border-main rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#8BAAA8] transition-colors"
               />
             </div>
             <div>
@@ -449,7 +449,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                 name="site_url"
                 value={siteUrl}
                 onChange={(e) => setSiteUrl(e.target.value)}
-                className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#8BAAA8] transition-colors"
+                className="w-full bg-bg-input border border-border-main rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#8BAAA8] transition-colors"
               />
               <p className="text-xs text-zinc-500 mt-2">Make sure to include https://</p>
             </div>
