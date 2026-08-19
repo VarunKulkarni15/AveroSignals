@@ -6,7 +6,6 @@ interface PreviewProps {
   title: string;
   body: string;
   image?: string;
-  image?: string;
   appName: string;
   siteUrl?: string;
   icon: string;
