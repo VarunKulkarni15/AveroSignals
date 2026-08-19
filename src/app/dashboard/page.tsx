@@ -17,22 +17,22 @@ export default async function DashboardPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-zinc-100 font-sans">
-      <header className="border-b border-zinc-800 bg-[#0a0a0a] px-8 py-4 flex justify-between items-center">
+    <div className="min-h-screen bg-[#000000] text-[#ededed] font-sans selection:bg-[#24b47e]/30">
+      <header className="border-b border-[#333333] bg-[#000000] px-8 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[#24b47e] flex items-center justify-center">
-            <svg className="w-4 h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          <div className="w-8 h-8 rounded border border-[#333333] bg-[#111111] flex items-center justify-center">
+            <svg className="w-4 h-4 text-[#24b47e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <h1 className="font-semibold text-lg">PushHub Dashboard</h1>
+          <h1 className="font-medium text-lg tracking-wide text-white">PushHub Dashboard</h1>
         </div>
-        <div className="text-sm text-zinc-400">{user.email}</div>
+        <div className="text-sm text-[#a1a1aa]">{user.email}</div>
       </header>
 
       <main className="max-w-5xl mx-auto px-8 py-12">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">Your Projects</h2>
+          <h2 className="text-xl font-medium text-white">Your Projects</h2>
           
           <form action={createProject} className="flex gap-2">
             <input 
@@ -40,11 +40,11 @@ export default async function DashboardPage() {
               name="name" 
               placeholder="Project Name..."
               required
-              className="bg-zinc-900 border border-zinc-800 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-[#24b47e] transition-colors"
+              className="bg-[#111111] border border-[#333333] rounded-md px-3 py-1.5 text-sm text-[#ededed] focus:outline-none focus:border-[#24b47e] transition-colors"
             />
             <button 
               type="submit"
-              className="bg-[#24b47e] text-black font-medium text-sm px-4 py-1.5 rounded-md hover:bg-[#209f6e] transition-colors"
+              className="bg-[#111111] text-[#ededed] font-medium text-sm px-4 py-1.5 rounded-md border border-[#333333] hover:border-[#24b47e] hover:text-[#24b47e] transition-all"
             >
               New Project
             </button>
@@ -52,9 +52,9 @@ export default async function DashboardPage() {
         </div>
 
         {(!projects || projects.length === 0) ? (
-          <div className="border border-zinc-800 border-dashed rounded-xl p-12 text-center bg-zinc-900/30">
-            <p className="text-zinc-400 mb-2">You don't have any projects yet.</p>
-            <p className="text-sm text-zinc-500">Create one above to get your Project ID and start sending notifications.</p>
+          <div className="border border-[#333333] border-dashed rounded-xl p-12 text-center bg-[#111111]/50">
+            <p className="text-[#a1a1aa] mb-2">You don't have any projects yet.</p>
+            <p className="text-sm text-[#666666]">Create one above to get your Project ID and start sending notifications.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -62,13 +62,13 @@ export default async function DashboardPage() {
               <Link 
                 key={project.id} 
                 href={`/dashboard/${project.id}`}
-                className="group block bg-[#111] border border-zinc-800 rounded-xl p-6 hover:border-[#24b47e] transition-all hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(36,180,126,0.12)]"
+                className="group block bg-[#111111] border border-[#333333] rounded-xl p-6 hover:border-[#24b47e] transition-all hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(36,180,126,0.06)]"
               >
-                <h3 className="text-lg font-semibold mb-2 group-hover:text-[#24b47e] transition-colors">{project.name}</h3>
-                <div className="text-xs font-mono text-zinc-500 bg-zinc-900 px-2 py-1 rounded w-fit mb-4">
+                <h3 className="text-lg font-medium mb-2 text-white group-hover:text-[#24b47e] transition-colors">{project.name}</h3>
+                <div className="text-xs font-mono text-[#a1a1aa] bg-[#000000] border border-[#333333] px-2 py-1 rounded w-fit mb-4">
                   ID: {project.id}
                 </div>
-                <div className="flex items-center text-sm text-zinc-400">
+                <div className="flex items-center text-sm text-[#666666] group-hover:text-[#a1a1aa] transition-colors">
                   <span>Manage Broadcasts →</span>
                 </div>
               </Link>

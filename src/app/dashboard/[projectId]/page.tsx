@@ -103,16 +103,22 @@ export default function Dashboard({ params }: { params: { projectId: string } })
   };
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-white p-8 md:p-24 font-sans selection:bg-white selection:text-black">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-12">
-          <h1 className="text-3xl font-bold tracking-tight mb-2">PushHub Dashboard</h1>
-          <p className="text-zinc-400 text-sm">Broadcast custom notifications to your subscribers.</p>
+    <div className="min-h-screen bg-[#000000] text-[#ededed] font-sans selection:bg-[#24b47e]/30">
+      <header className="border-b border-[#333333] bg-[#000000] px-8 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Link href="/dashboard" className="text-[#a1a1aa] hover:text-white mr-2">← Back</Link>
+          <div className="w-8 h-8 rounded border border-[#333333] bg-[#111111] flex items-center justify-center">
+            <svg className="w-4 h-4 text-[#24b47e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+            </svg>
+          </div>
+          <h1 className="font-medium text-lg text-white">Broadcast</h1>
         </div>
+      </header>
 
-        <div className="flex flex-col lg:flex-row gap-12 mt-12">
-        {/* Left Column: Compose Form */}
-        <div className="flex-1 bg-black/40 border border-zinc-800 rounded-2xl p-8 backdrop-blur-xl">
+      <div className="p-8 md:p-24">
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12">
+        <div className="flex-1 bg-[#000000] border border-[#333333] rounded-lg p-8">
           <form onSubmit={handleBroadcast} className="flex flex-col gap-6">
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-2">Notification Title</label>
@@ -121,7 +127,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+              className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#24b47e] transition-all"
               placeholder="e.g. New Project Live!"
             />
           </div>
@@ -133,7 +139,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
               value={body}
               onChange={(e) => setBody(e.target.value)}
               rows={4}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all resize-none"
+              className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#24b47e] transition-all resize-none"
               placeholder="Check out my new portfolio update..."
             />
           </div>
@@ -146,37 +152,36 @@ export default function Dashboard({ params }: { params: { projectId: string } })
                 accept="image/*"
                 onChange={handleFileChange}
                 disabled={loading}
-                className="text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20 transition-all cursor-pointer disabled:opacity-50"
+                className="text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#111111] file:text-white hover:file:bg-[#222222] transition-all cursor-pointer disabled:opacity-50"
               />
               {status === 'Uploading image...' && (
                 <p className="text-sm text-zinc-400 animate-pulse">Uploading...</p>
               )}
               {image && status !== 'Uploading image...' && (
-                <div className="relative mt-2 rounded-lg overflow-hidden border border-zinc-800 bg-zinc-900 w-full max-w-sm aspect-video">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                <div className="relative mt-2 rounded-lg overflow-hidden border border-[#333333] bg-[#111111] w-full max-w-sm aspect-video">
                   <img src={image} alt="Preview" className="object-cover w-full h-full" />
                 </div>
               )}
             </div>
           </div>
 
-          <div className="border border-zinc-800 rounded-lg overflow-hidden bg-black/20">
+          <div className="border border-[#333333] rounded-lg overflow-hidden bg-[#0a0a0a]">
             <button 
               type="button" 
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="w-full px-4 py-3 flex items-center justify-between text-sm font-semibold text-zinc-300 hover:bg-white/5 transition-colors"
+              className="w-full px-4 py-3 flex items-center justify-between text-sm font-semibold text-zinc-300 hover:bg-[#111111] transition-colors"
             >
               Advanced Settings (Segments & Scheduling)
               <span>{showAdvanced ? '▲' : '▼'}</span>
             </button>
             {showAdvanced && (
-              <div className="p-4 border-t border-zinc-800 flex flex-col gap-4">
+              <div className="p-4 border-t border-[#333333] flex flex-col gap-4">
                 <div>
                   <label className="block text-xs font-medium text-zinc-400 mb-1">Target Audience (Segment)</label>
                   <select 
                     value={targetOS}
                     onChange={(e) => setTargetOS(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none"
                   >
                     <option value="All">All Users</option>
                     <option value="Windows">Windows Users Only</option>
@@ -192,7 +197,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
                       type="datetime-local" 
                       value={scheduleTime}
                       onChange={(e) => setScheduleTime(e.target.value)}
-                      className="flex-1 bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-white focus:outline-none [color-scheme:dark]"
+                      className="flex-1 bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none [color-scheme:dark]"
                     />
                     {scheduleTime && (
                       <button 
@@ -204,7 +209,6 @@ export default function Dashboard({ params }: { params: { projectId: string } })
                       </button>
                     )}
                   </div>
-                  <p className="text-[10px] text-zinc-500 mt-1">Leave blank to send immediately.</p>
                 </div>
               </div>
             )}
@@ -213,25 +217,34 @@ export default function Dashboard({ params }: { params: { projectId: string } })
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-white text-black font-bold py-4 rounded-lg hover:bg-zinc-200 transition-colors disabled:opacity-50 mt-4"
+              className={`w-full font-medium py-3 px-4 rounded-md transition-all border ${
+                loading 
+                  ? 'bg-[#111111] border-[#333333] text-[#666666] cursor-not-allowed' 
+                  : 'bg-[#111111] border-[#333333] hover:border-[#24b47e] text-[#ededed] hover:text-[#24b47e] hover:shadow-[0_0_15px_rgb(36,180,126,0.15)]'
+              }`}
             >
               {loading ? 'Broadcasting...' : 'Broadcast Notification'}
             </button>
+            
+            {status && (
+              <div className={`mt-4 p-3 rounded-md border text-sm ${status.includes('Error') || status.includes('Failed') ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-[#24b47e]/10 border-[#24b47e]/20 text-[#24b47e]'}`}>
+                {status}
+              </div>
+            )}
           </form>
         </div>
 
-        {/* Right Column: Live Preview */}
-        <div className="flex-1 flex flex-col items-center">
-          <div className="w-full max-w-sm bg-black/40 border border-zinc-800 rounded-2xl p-6 backdrop-blur-xl">
+        <div className="w-full lg:w-1/3 flex flex-col items-center">
+          <div className="w-full max-w-sm bg-[#000000] border border-[#333333] rounded-lg p-6">
             <h3 className="text-white font-semibold mb-4 text-center">Live Preview</h3>
             
-            <div className="flex items-center justify-center gap-2 mb-6 bg-zinc-900/50 p-1 rounded-lg">
+            <div className="flex items-center justify-center gap-2 mb-6 bg-[#111111] p-1 rounded-lg">
               {(['windows', 'mac', 'android', 'ios'] as const).map((os) => (
                 <button
                   key={os}
                   onClick={() => setPreviewOS(os)}
                   className={`flex-1 py-1.5 text-xs font-semibold rounded-md capitalize transition-colors ${
-                    previewOS === os ? 'bg-zinc-700 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'
+                    previewOS === os ? 'bg-[#333333] text-white' : 'text-zinc-400 hover:text-white hover:bg-[#222222]'
                   }`}
                 >
                   {os}
@@ -251,7 +264,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
               />
             </div>
 
-            <div className="mt-8 border-t border-zinc-800 pt-6">
+            <div className="mt-8 border-t border-[#333333] pt-6">
               <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Site Settings</h4>
               <div className="flex flex-col gap-3">
                 <div>
@@ -260,7 +273,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
                     type="text" 
                     value={appName}
                     onChange={(e) => setAppName(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-white focus:outline-none mb-2"
+                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none mb-2"
                   />
                 </div>
                 <div>
@@ -269,7 +282,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
                     type="text" 
                     value={siteUrl}
                     onChange={(e) => setSiteUrl(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none"
                   />
                 </div>
                 <div>
@@ -278,19 +291,15 @@ export default function Dashboard({ params }: { params: { projectId: string } })
                     type="text" 
                     value={icon}
                     onChange={(e) => setIcon(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#111111] border border-[#333333] rounded px-3 py-2 text-sm text-white focus:outline-none"
                   />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div> {status && (
-          <div className={`mt-6 p-4 rounded-lg text-sm border ${status.includes('Error') || status.includes('Failed') ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-green-500/10 border-green-500/20 text-green-400'}`}>
-            {status}
-          </div>
-        )}
       </div>
-    </main>
+      </div>
+    </div>
   );
 }
