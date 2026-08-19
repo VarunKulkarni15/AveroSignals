@@ -97,9 +97,16 @@ class PushHubSDK {
 
   async promptPush() {
     if (!this.registration) {
-      console.log('PushHub: Service worker not registered yet.');
-      alert('PushHub Error: Service worker not registered. Ensure pushhub-sw.js is in your root directory.');
-      return;
+      if (!('serviceWorker' in navigator)) {
+        console.error('PushHub Error: Service workers are not supported by this browser.');
+        return;
+      }
+      try {
+        this.registration = await navigator.serviceWorker.register('/pushhub-sw.js');
+      } catch (e) {
+        console.error('PushHub Error: Service worker not registered. Ensure pushhub-sw.js is in your root directory.', e);
+        return;
+      }
     }
     try {
       const permission = await Notification.requestPermission();
@@ -128,7 +135,7 @@ class PushHubSDK {
       });
 
       console.log('Successfully subscribed to PushHub!');
-      alert('Successfully subscribed to Push Notifications!');
+      // Removed the alert() to make it completely seamless
     } catch (error) {
       console.error('Error during PushHub subscription:', error);
     }
