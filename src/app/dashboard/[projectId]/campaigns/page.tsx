@@ -77,7 +77,7 @@ export default function CampaignsPage({ params }: { params: Promise<{ projectId:
           {error}
         </div>
       ) : broadcasts.length === 0 ? (
-        <div className="bg-bg-card border border-border-main rounded-xl p-12 flex flex-col items-center justify-center text-center">
+        <div className="p-12 mt-10 flex flex-col items-center justify-center text-center">
           <div className="w-16 h-16 bg-bg-input rounded-full flex items-center justify-center mb-4 border border-border-main">
             <svg className="w-8 h-8 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
