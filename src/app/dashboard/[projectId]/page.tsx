@@ -1,13 +1,12 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createBrowserClient } from '@supabase/ssr';
 import NotificationPreview from '@/components/NotificationPreview';
 import { updateProjectSettings, deleteProject } from './actions';
 
-export default function Dashboard({ params }: { params: { projectId: string } }) {
+export default function Dashboard({ params }: { params: Promise<{ projectId: string }> }) {
+  const { projectId } = use(params);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [image, setImage] = useState('');
@@ -35,7 +34,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
     
     supabase.from('projects')
       .select('*')
-      .eq('id', params.projectId)
+      .eq('id', projectId)
       .single()
       .then(({ data }) => {
         if (data) {
@@ -43,7 +42,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
           setSiteUrl(data.site_url || '');
         }
       });
-  }, [params.projectId]);
+  }, [projectId]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -99,7 +98,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
           image, 
           targetOS, 
           scheduleTime,
-          projectId: params.projectId 
+          projectId 
         }),
       });
       
@@ -125,7 +124,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
     
     try {
       const formData = new FormData(e.currentTarget);
-      const res = await updateProjectSettings(params.projectId, formData);
+      const res = await updateProjectSettings(projectId, formData);
       if (res.error) setSettingsStatus(`Error: ${res.error}`);
       else setSettingsStatus('Settings saved successfully!');
     } catch (err) {
@@ -141,7 +140,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
     if (!confirm('Are you absolutely sure you want to delete this project? This cannot be undone.')) return;
     setIsDeleting(true);
     try {
-      const res = await deleteProject(params.projectId);
+      const res = await deleteProject(projectId);
       if (res.success) {
         router.push('/dashboard');
       } else {
@@ -158,7 +157,7 @@ export default function Dashboard({ params }: { params: { projectId: string } })
     <div className="max-w-7xl mx-auto px-8 py-12 animate-in fade-in duration-500">
       <div className="mb-10">
         <h1 className="text-3xl font-semibold text-white tracking-tight mb-2">Project Workspace</h1>
-        <p className="text-[#a1a1aa] text-sm font-mono">ID: {params.projectId}</p>
+        <p className="text-[#a1a1aa] text-sm font-mono">ID: {projectId}</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
