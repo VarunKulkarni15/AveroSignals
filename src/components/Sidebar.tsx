@@ -20,11 +20,61 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
       )
     },
     {
+      name: 'Campaigns',
+      href: '#',
+      isPro: true,
+      icon: (
+        <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+        </svg>
+      )
+    },
+    {
+      name: 'Audience',
+      href: '#',
+      isPro: true,
+      icon: (
+        <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      )
+    },
+    {
+      name: 'Automations',
+      href: '#',
+      isPro: true,
+      icon: (
+        <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      )
+    },
+    {
+      name: 'Analytics',
+      href: '#',
+      isPro: true,
+      icon: (
+        <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      )
+    },
+    {
       name: 'Documentation',
       href: '/dashboard/docs',
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      )
+    },
+    {
+      name: 'Billing',
+      href: '#',
+      isPro: true,
+      icon: (
+        <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
         </svg>
       )
     }
@@ -66,16 +116,29 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
             <Link 
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 px-2 py-2.5 rounded-lg transition-colors overflow-hidden whitespace-nowrap group
+              onClick={(e) => {
+                if ((item as any).isPro) {
+                  e.preventDefault();
+                  alert(`${item.name} is a Pro feature and is currently in development! Upgrade coming soon.`);
+                }
+              }}
+              className={`flex items-center justify-between px-2 py-2.5 rounded-lg transition-colors overflow-hidden whitespace-nowrap group
                 ${isActive ? 'bg-bg-input text-white' : 'text-[#a1a1aa] hover:bg-bg-input hover:text-white'}
               `}
             >
-              <div className={`${isActive ? 'text-[#8BAAA8]' : 'text-[#666666] group-hover:text-white'} transition-colors`}>
-                {item.icon}
+              <div className="flex items-center gap-3">
+                <div className={`${isActive ? 'text-[#8BAAA8]' : 'text-[#666666] group-hover:text-white'} transition-colors`}>
+                  {item.icon}
+                </div>
+                <span className={`font-medium text-sm transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
+                  {item.name}
+                </span>
               </div>
-              <span className={`font-medium text-sm transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
-                {item.name}
-              </span>
+              {(item as any).isPro && (
+                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#8BAAA8]/10 text-[#8BAAA8] border border-[#8BAAA8]/20 transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
+                  PRO
+                </span>
+              )}
             </Link>
           )
         })}
