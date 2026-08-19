@@ -63,45 +63,45 @@ export default async function DashboardPage() {
                 href={`/dashboard/${project.id}`}
                 className="group flex flex-col bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#333333] rounded-xl overflow-hidden hover:border-[#666666] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(139,170,168,0.05)]"
               >
-                <div className="p-4 flex-1">
-                  <div className="flex items-start justify-between mb-4">
+                <div className="p-3 flex-1">
+                  <div className="flex items-start justify-between mb-2">
                     {project.site_url ? (
                       <img 
                         src={`https://www.google.com/s2/favicons?domain=${project.site_url}&sz=64`} 
                         alt="Project Icon" 
-                        className="w-9 h-9 rounded-full border border-[#333333] bg-[#000000] object-contain p-1"
+                        className="w-7 h-7 rounded-full border border-[#333333] bg-[#000000] object-contain p-0.5"
                       />
                     ) : (
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4A696C] to-[#2c3e40] flex items-center justify-center text-white font-bold text-base shadow-inner">
+                      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#4A696C] to-[#2c3e40] flex items-center justify-center text-white font-bold text-sm shadow-inner">
                         {project.name.charAt(0).toUpperCase()}
                       </div>
                     )}
-                    <div className="bg-[#111111] border border-[#333333] px-2 py-1 rounded text-[11px] font-mono text-[#a1a1aa] flex items-center gap-1.5 group-hover:text-[#8BAAA8] transition-colors">
+                    <div className="bg-[#111111] border border-[#333333] px-1.5 py-0.5 rounded text-[10px] font-mono text-[#a1a1aa] flex items-center gap-1 group-hover:text-[#8BAAA8] transition-colors">
                       ID: {project.id.split('-')[0]}...
                     </div>
                   </div>
                   
-                  <h3 className="text-base font-medium text-[#ededed] mb-1">{project.name}</h3>
-                  <div className="flex items-center text-xs text-[#a1a1aa] gap-1.5 mb-5">
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <h3 className="text-sm font-medium text-[#ededed] mb-0.5">{project.name}</h3>
+                  <div className="flex items-center text-[11px] text-[#a1a1aa] gap-1 mb-3">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                     </svg>
                     {project.site_url ? project.site_url.replace(/^https?:\/\//, '') : 'No URL set'}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-[#111111] rounded-lg p-2.5 border border-[#222222]">
-                      <div className="text-[10px] text-[#666666] font-medium uppercase tracking-wider mb-1">Subscribers</div>
-                      <div className="text-lg text-[#ededed] font-semibold">0</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="bg-[#111111] rounded-lg p-2 border border-[#222222]">
+                      <div className="text-[9px] text-[#666666] font-medium uppercase tracking-wider mb-0.5">Subscribers</div>
+                      <div className="text-sm text-[#ededed] font-semibold">0</div>
                     </div>
-                    <div className="bg-[#111111] rounded-lg p-2.5 border border-[#222222]">
-                      <div className="text-[10px] text-[#666666] font-medium uppercase tracking-wider mb-1">Broadcasts</div>
-                      <div className="text-lg text-[#ededed] font-semibold">0</div>
+                    <div className="bg-[#111111] rounded-lg p-2 border border-[#222222]">
+                      <div className="text-[9px] text-[#666666] font-medium uppercase tracking-wider mb-0.5">Broadcasts</div>
+                      <div className="text-sm text-[#ededed] font-semibold">0</div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="border-t border-[#333333] bg-[#111111] px-5 py-2.5 flex justify-between items-center group-hover:bg-[#1a1a1a] transition-colors">
+                <div className="border-t border-[#333333] bg-[#111111] px-4 py-2 flex justify-between items-center group-hover:bg-[#1a1a1a] transition-colors">
                   <span className="text-xs font-medium text-[#ededed]">Manage Project</span>
                   <svg className="w-4 h-4 text-[#666666] group-hover:text-[#8BAAA8] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

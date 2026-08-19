@@ -19,8 +19,8 @@ export default async function DashboardLayout({
       {/* Global Sidebar */}
       <Sidebar email={user.email!} avatarUrl={user.user_metadata?.avatar_url} />
 
-      {/* Main Content Area (offset by the sidebar width logic via flex-1 and ml-16 to guarantee no overlap on narrow collapse) */}
-      <main className="flex-1 ml-16 min-w-0 transition-all duration-300">
+      {/* Main Content Area */}
+      <main className="flex-1 overflow-y-auto">
         {children}
       </main>
     </div>

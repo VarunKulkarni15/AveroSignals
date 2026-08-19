@@ -42,7 +42,7 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
 
   return (
     <aside 
-      className={`fixed left-0 top-0 h-screen bg-[#000000] border-r border-[#333333] z-40 transition-all duration-300 flex flex-col ${isExpanded ? 'w-64' : 'w-16'}`}
+      className={`h-screen sticky top-0 bg-[#000000] border-r border-[#333333] z-40 transition-all duration-300 flex flex-col shrink-0 ${isExpanded ? 'w-64' : 'w-16'}`}
     >
       {/* Logo & Toggle Area */}
       <div className="h-16 flex items-center justify-between px-4 border-b border-[#333333] relative">
