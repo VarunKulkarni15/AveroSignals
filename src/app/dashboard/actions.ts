@@ -69,3 +69,34 @@ export async function generateApiKey(projectId: string) {
   revalidatePath(`/dashboard/${projectId}`)
   return { success: true, key: newKey }
 }
+
+export async function grantQuota(projectId: string, amount: number) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    return { error: 'Not authenticated' }
+  }
+
+  const { data: project } = await supabase
+    .from('projects')
+    .select('broadcast_quota')
+    .eq('id', projectId)
+    .single()
+
+  const newQuota = (project?.broadcast_quota || 10000) + amount
+
+  const { error } = await supabase
+    .from('projects')
+    .update({ broadcast_quota: newQuota })
+    .eq('id', projectId)
+    .eq('user_id', user.id)
+
+  if (error) {
+    console.error('Failed to grant quota:', error)
+    return { error: 'Failed to grant quota' }
+  }
+
+  revalidatePath(`/dashboard/${projectId}`)
+  return { success: true }
+}

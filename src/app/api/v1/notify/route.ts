@@ -25,14 +25,21 @@ export async function POST(req: Request) {
     const secretApiKey = authHeader.split(' ')[1];
 
     // 2. Find the project with this API Key
-    const { data: project, error: projectError } = await supabaseAdmin
+    const { data: project, error: projError } = await supabaseAdmin
       .from('projects')
-      .select('id, broadcast_count')
+      .select('id, user_id, broadcast_count, broadcast_quota')
       .eq('secret_api_key', secretApiKey)
       .single();
 
-    if (projectError || !project) {
+    if (projError || !project) {
       return NextResponse.json({ error: 'Invalid API Key' }, { status: 401 });
+    }
+
+    const currentCount = project.broadcast_count || 0;
+    const currentQuota = project.broadcast_quota || 10000;
+
+    if (currentCount >= currentQuota) {
+      return NextResponse.json({ error: 'Broadcast quota exceeded. Please upgrade your plan or unlock more quota.' }, { status: 403 });
     }
 
     const projectId = project.id;

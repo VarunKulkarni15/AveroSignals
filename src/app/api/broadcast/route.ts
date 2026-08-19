@@ -17,10 +17,29 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { title, body, image, targetOS, targetRegion, scheduleTime, projectId } = await req.json();
+    const bodyData = await req.json();
+    const { title, body, image, targetOS, targetRegion, scheduleTime, projectId } = bodyData;
+  
+    if (!projectId || !title || !body) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
 
-    if (!projectId) {
-      return NextResponse.json({ error: 'Project ID is required' }, { status: 400 });
+    // Fetch project details and verify quota
+    const { data: project, error: projError } = await supabase
+      .from('projects')
+      .select('user_id, broadcast_count, broadcast_quota')
+      .eq('id', projectId)
+      .single();
+      
+    if (projError || !project) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+
+    const currentCount = project.broadcast_count || 0;
+    const currentQuota = project.broadcast_quota || 10000;
+
+    if (currentCount >= currentQuota) {
+      return NextResponse.json({ error: 'Broadcast quota exceeded. Please unlock more quota or upgrade.' }, { status: 403 });
     }
 
     const { data, error } = await supabase

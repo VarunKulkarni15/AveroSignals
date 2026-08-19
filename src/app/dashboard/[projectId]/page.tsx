@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createBrowserClient } from '@supabase/ssr';
 import NotificationPreview from '@/components/NotificationPreview';
-import { updateProjectSettings, deleteProject, generateApiKey } from './actions';
+import { updateProjectSettings, deleteProject, generateApiKey, grantQuota } from './actions';
 
 export default function Dashboard({ params }: { params: Promise<{ projectId: string }> }) {
   const { projectId } = use(params);
@@ -603,10 +603,14 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                     className="w-full h-full object-cover"
                     onEnded={async () => {
                       setAdPlaying(false);
-                      // Give +5000 quota
-                      alert("Reward unlocked! +5,000 Broadcasts added to your account.");
+                      const res = await grantQuota(projectId, 5000);
+                      if (res.success) {
+                        alert("Reward unlocked! +5,000 Broadcasts added to your account.");
+                        setBroadcastQuota(q => q + 5000);
+                      } else {
+                        alert("Error unlocking reward.");
+                      }
                       setShowQuotaModal(false);
-                      // In a real app, call a secure server action here to update the quota in DB
                     }}
                   >
                     <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4" />
@@ -636,10 +640,15 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                         <p className="text-sm text-zinc-400">Post about us to get <span className="text-[#8BAAA8] font-bold">+2,500</span> broadcasts instantly.</p>
                       </div>
                       <button 
-                        onClick={() => {
+                        onClick={async () => {
                           window.open(`https://twitter.com/intent/tweet?text=Just%20started%20using%20PushHub%20for%20my%20push%20notifications!%20%40PushHubApp&url=${encodeURIComponent(window.location.origin)}`, '_blank');
-                          // Mock instant reward
-                          alert("Thank you for sharing! +2,500 Broadcasts added.");
+                          const res = await grantQuota(projectId, 2500);
+                          if (res.success) {
+                            alert("Thank you for sharing! +2,500 Broadcasts added.");
+                            setBroadcastQuota(q => q + 2500);
+                          } else {
+                            alert("Error unlocking reward.");
+                          }
                           setShowQuotaModal(false);
                         }}
                         className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
