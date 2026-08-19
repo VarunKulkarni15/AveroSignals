@@ -24,25 +24,9 @@ export default function LandingPage() {
 
       <main className="relative z-10 flex flex-col items-center justify-center pt-32 pb-16 px-4 text-center max-w-4xl mx-auto">
         
-        {/* Premium SaaS Badge */}
-        <div className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md cursor-pointer mb-8 overflow-hidden transition-all hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_30px_rgba(139,170,168,0.15)]">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#4A696C]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          
-          <div className="flex items-center gap-2.5 z-10">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-[#8BAAA8] shadow-[0_0_8px_#8BAAA8]"></span>
-            <span className="text-sm font-medium bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-              PushHub v2.0 Beta is now live
-            </span>
-            <svg 
-              className="w-4 h-4 text-white/40 group-hover:text-white transition-all duration-300 transform group-hover:translate-x-0.5" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </div>
+        <p className="text-[#8BAAA8] text-sm tracking-[0.2em] font-medium uppercase mb-8">
+          v2.0 Beta is Live
+        </p>
         
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white drop-shadow-sm">
           Web Push Notifications,<br/>
