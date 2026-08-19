@@ -394,8 +394,8 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
           </form>
         </div>
 
-        <div className="w-full lg:w-1/3 flex flex-col items-center">
-          <div className="w-full max-w-sm bg-bg-main border border-border-main rounded-lg p-6">
+        <div className="w-full lg:w-[500px] xl:w-[600px] flex flex-col items-center shrink-0">
+          <div className="w-full bg-bg-main border border-border-main rounded-lg p-6 overflow-hidden">
             <h3 className="text-white font-semibold mb-4 text-center">Live Preview</h3>
             
             <div className="flex items-center justify-center gap-2 mb-6 bg-bg-input p-1 rounded-lg">
