@@ -28,6 +28,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
   const [settingsStatus, setSettingsStatus] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [scriptTag, setScriptTag] = useState('');
+  const [subscriberCount, setSubscriberCount] = useState<number>(0);
 
   useEffect(() => {
     setScriptTag(`<script src="${window.location.origin}/api/sdk" data-project-id="${projectId}"></script>`);
@@ -48,6 +49,13 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
           setAppName(data.name || '');
           setSiteUrl(data.site_url || '');
         }
+      });
+
+    supabase.from('subscriptions')
+      .select('id', { count: 'exact', head: true })
+      .eq('project_id', projectId)
+      .then(({ count }) => {
+        if (count !== null) setSubscriberCount(count);
       });
   }, [projectId]);
 
@@ -214,7 +222,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
         <div className="bg-[#0a0a0a] border border-[#333333] rounded-xl p-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Total Subscribers</p>
-            <p className="text-2xl font-semibold text-white">0</p>
+            <p className="text-2xl font-semibold text-white">{subscriberCount}</p>
           </div>
           <div className="w-10 h-10 rounded-full bg-[#111111] border border-[#333333] flex items-center justify-center">
             <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">

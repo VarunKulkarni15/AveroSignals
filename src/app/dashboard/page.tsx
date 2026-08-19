@@ -17,6 +17,15 @@ export default async function DashboardPage() {
     .select('*')
     .order('created_at', { ascending: false })
 
+  const { data: subscriptions } = await supabase
+    .from('subscriptions')
+    .select('project_id')
+
+  const subscriberCounts = (subscriptions || []).reduce((acc: any, sub: any) => {
+    acc[sub.project_id] = (acc[sub.project_id] || 0) + 1;
+    return acc;
+  }, {});
+
   async function createProject(formData: FormData) {
     'use server'
     const name = formData.get('name') as string
@@ -92,7 +101,7 @@ export default async function DashboardPage() {
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-[#111111] rounded-lg p-2 border border-[#222222]">
                       <div className="text-[9px] text-[#666666] font-medium uppercase tracking-wider mb-0.5">Subscribers</div>
-                      <div className="text-sm text-[#ededed] font-semibold">0</div>
+                      <div className="text-sm text-[#ededed] font-semibold">{subscriberCounts[project.id] || 0}</div>
                     </div>
                     <div className="bg-[#111111] rounded-lg p-2 border border-[#222222]">
                       <div className="text-[9px] text-[#666666] font-medium uppercase tracking-wider mb-0.5">Broadcasts</div>
