@@ -32,7 +32,8 @@ export async function POST(req: Request) {
       .single();
       
     if (projError || !project) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+      console.error("Project fetch error:", projError);
+      return NextResponse.json({ error: `Project error: ${projError?.message || 'Not found'}` }, { status: 404 });
     }
 
     const currentCount = project.broadcast_count || 0;
