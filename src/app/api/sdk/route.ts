@@ -123,7 +123,6 @@ window.PushHubSDK = PushHubSDK;
 
 // Auto-initialize if data-project-id is present on the script tag
 (function() {
-  // Find our script tag
   const scripts = document.getElementsByTagName('script');
   let currentScript = null;
   for (let i = 0; i < scripts.length; i++) {
@@ -142,6 +141,57 @@ window.PushHubSDK = PushHubSDK;
         apiUrl: '${origin}'
       });
       console.log('PushHub SDK auto-initialized for project:', projectId);
+
+      // Inject OneSignal-style floating widget
+      const widgetHTML = \`
+        <div id="pushhub-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; display: flex; align-items: center; gap: 12px; font-family: system-ui, -apple-system, sans-serif; background: #111111; border: 1px solid #333333; padding: 10px 16px; border-radius: 9999px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5); cursor: pointer; transition: all 0.2s ease;">
+          <div style="width: 24px; height: 24px; background: #8BAAA8; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
+          <span style="color: #ededed; font-size: 14px; font-weight: 500;">Subscribe to Updates</span>
+        </div>
+      \`;
+      
+      const widgetContainer = document.createElement('div');
+      widgetContainer.innerHTML = widgetHTML;
+      document.body.appendChild(widgetContainer.firstElementChild);
+
+      const widget = document.getElementById('pushhub-widget');
+      
+      // Hover effects
+      widget.addEventListener('mouseenter', () => {
+        widget.style.transform = 'translateY(-2px)';
+        widget.style.borderColor = '#8BAAA8';
+        widget.style.boxShadow = '0 10px 25px -5px rgba(139, 170, 168, 0.2), 0 8px 10px -6px rgba(139, 170, 168, 0.2)';
+      });
+      widget.addEventListener('mouseleave', () => {
+        widget.style.transform = 'translateY(0)';
+        widget.style.borderColor = '#333333';
+        widget.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)';
+      });
+
+      // Click to subscribe
+      widget.addEventListener('click', async () => {
+        const originalText = widget.querySelector('span').innerText;
+        widget.querySelector('span').innerText = 'Loading...';
+        await window.pushhub.promptPush();
+        
+        // Hide widget after successful subscription
+        if (Notification.permission === 'granted') {
+          widget.style.opacity = '0';
+          setTimeout(() => widget.remove(), 300);
+        } else {
+          widget.querySelector('span').innerText = originalText;
+        }
+      });
+      
+      // Check if already subscribed to hide widget initially
+      if ('Notification' in window && Notification.permission === 'granted') {
+        widget.style.display = 'none';
+      }
     }
   }
 })();
