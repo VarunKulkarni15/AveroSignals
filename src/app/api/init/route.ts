@@ -25,21 +25,17 @@ export async function POST(req: Request) {
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Only update if the project doesn't have a site_url yet (to prevent malicious overwriting)
-    const { data: project } = await supabase
+    // Unconditionally update the project with the detected metadata
+    const { error } = await supabase
       .from('projects')
-      .select('site_url')
-      .eq('id', projectId)
-      .single();
+      .update({
+        site_url: metadata.siteUrl,
+        name: metadata.siteName || 'My Application'
+      })
+      .eq('id', projectId);
 
-    if (project && (!project.site_url || project.site_url === '')) {
-      await supabase
-        .from('projects')
-        .update({
-          site_url: metadata.siteUrl,
-          name: metadata.siteName || 'My Application'
-        })
-        .eq('id', projectId);
+    if (error) {
+      console.error('Failed to update project:', error);
     }
 
     return NextResponse.json({ success: true }, { headers: corsHeaders });
