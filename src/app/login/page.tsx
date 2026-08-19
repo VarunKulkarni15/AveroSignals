@@ -1,7 +1,39 @@
+'use client'
+
 import { login, signup } from './actions'
 import Link from 'next/link'
+import { useState } from 'react'
 
 export default function LoginPage({ searchParams }: { searchParams: { error?: string } }) {
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [validationError, setValidationError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setValidationError('');
+
+    if (!email) {
+      setValidationError('Please enter your email address.');
+      return;
+    }
+    if (!password) {
+      setValidationError('Please enter your password.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+
+    if (isSignUp) {
+      await signup(formData);
+    } else {
+      await login(formData);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#000000] text-[#ededed] flex flex-col items-center justify-center p-4 selection:bg-[#4A696C]/30">
       
@@ -15,7 +47,9 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
       </Link>
 
       <div className="w-full max-w-[400px] bg-[#111111] border border-[#333333] rounded-lg p-8 shadow-2xl">
-        <h2 className="text-xl font-medium text-white mb-6">Welcome back</h2>
+        <h2 className="text-xl font-medium text-white mb-6">
+          {isSignUp ? 'Create your account' : 'Welcome back'}
+        </h2>
         
         <div className="flex flex-col gap-3 mb-6">
           <button type="button" className="w-full flex items-center justify-center gap-3 px-4 py-2 rounded-md border border-[#333333] bg-[#1a1a1a] hover:bg-[#222222] text-[#ededed] text-sm font-medium transition-colors">
@@ -35,16 +69,17 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
           <hr className="flex-1 border-[#333333]" />
         </div>
 
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" noValidate onSubmit={handleSubmit}>
           <div>
             <label className="block text-xs font-medium text-[#a1a1aa] mb-1.5" htmlFor="email">Email address</label>
             <input 
               id="email" 
               name="email" 
               type="email" 
-              required 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full bg-[#000000] border border-[#333333] rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors"
+              className={`w-full bg-[#000000] border ${validationError.includes('email') ? 'border-red-500/50' : 'border-[#333333]'} rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors`}
             />
           </div>
 
@@ -54,30 +89,32 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
               id="password" 
               name="password" 
               type="password" 
-              required 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full bg-[#000000] border border-[#333333] rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors"
+              className={`w-full bg-[#000000] border ${validationError.includes('password') ? 'border-red-500/50' : 'border-[#333333]'} rounded-md px-3 py-2 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors`}
             />
           </div>
 
-          {searchParams?.error && (
+          {(validationError || searchParams?.error) && (
             <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md">
-              <p className="text-xs text-red-400 text-center">{searchParams.error}</p>
+              <p className="text-xs text-red-400 text-center">{validationError || searchParams?.error}</p>
             </div>
           )}
 
-          <div className="flex flex-col gap-2 mt-4">
+          <div className="flex flex-col gap-3 mt-4">
             <button 
-              formAction={login} 
-              className="w-full bg-[#4A696C] text-white font-medium rounded-md px-4 py-2 text-sm hover:bg-[#3A5658] transition-colors"
+              type="submit"
+              className="w-full bg-[#4A696C] text-white font-medium rounded-md px-4 py-2.5 text-sm hover:bg-[#3A5658] transition-colors shadow-lg shadow-[#4A696C]/20"
             >
-              Sign In
+              {isSignUp ? 'Sign Up' : 'Sign In'}
             </button>
             <button 
-              formAction={signup} 
-              className="w-full bg-transparent text-[#a1a1aa] hover:text-[#ededed] border border-transparent font-medium rounded-md px-4 py-2 text-sm transition-colors"
+              type="button"
+              onClick={() => { setIsSignUp(!isSignUp); setValidationError(''); }}
+              className="w-full bg-transparent text-[#a1a1aa] hover:text-[#ededed] border border-[#333333] hover:border-[#4A696C] font-medium rounded-md px-4 py-2.5 text-sm transition-colors"
             >
-              Don't have an account? Sign up
+              {isSignUp ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
             </button>
           </div>
         </form>
