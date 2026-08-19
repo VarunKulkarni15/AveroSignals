@@ -77,6 +77,12 @@ export async function POST(req: Request) {
     }
 
     const sent = await sendPush();
+
+    // Increment broadcast count in the project table
+    const { data: project } = await supabase.from('projects').select('broadcast_count').eq('id', projectId).single();
+    if (project) {
+      await supabase.from('projects').update({ broadcast_count: (project.broadcast_count || 0) + 1 }).eq('id', projectId);
+    }
     
     return NextResponse.json({ success: true, sent });
   } catch (error) {

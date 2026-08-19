@@ -15,8 +15,9 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
-  const [appName, setAppName] = useState('My Portfolio');
-  const [siteUrl, setSiteUrl] = useState('localhost:3000');
+  const [appName, setAppName] = useState('My Application');
+  const [siteUrl, setSiteUrl] = useState('');
+  const [broadcastCount, setBroadcastCount] = useState<number>(0);
   const [icon, setIcon] = useState('https://img.icons8.com/fluency/48/bell.png');
   const [previewOS, setPreviewOS] = useState<'windows' | 'mac' | 'android' | 'ios'>('windows');
   
@@ -49,6 +50,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
         if (data) {
           setAppName(data.name || '');
           setSiteUrl(data.site_url || '');
+          setBroadcastCount(data.broadcast_count || 0);
         }
       });
 
@@ -235,7 +237,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
         <div className="bg-[#0a0a0a] border border-[#333333] rounded-xl p-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Total Broadcasts</p>
-            <p className="text-2xl font-semibold text-white">0</p>
+            <p className="text-2xl font-semibold text-white">{broadcastCount}</p>
           </div>
           <div className="w-10 h-10 rounded-full bg-[#111111] border border-[#333333] flex items-center justify-center">
             <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">

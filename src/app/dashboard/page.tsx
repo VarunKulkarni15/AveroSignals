@@ -105,7 +105,7 @@ export default async function DashboardPage() {
                     </div>
                     <div className="bg-[#111111] rounded-lg p-2 border border-[#222222]">
                       <div className="text-[9px] text-[#666666] font-medium uppercase tracking-wider mb-0.5">Broadcasts</div>
-                      <div className="text-sm text-[#ededed] font-semibold">0</div>
+                      <div className="text-sm text-[#ededed] font-semibold">{project.broadcast_count || 0}</div>
                     </div>
                   </div>
                 </div>
