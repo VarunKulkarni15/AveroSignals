@@ -10,6 +10,7 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
   const [password, setPassword] = useState('');
   const [validationError, setValidationError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,6 +25,8 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
       setValidationError('Please enter your password.');
       return;
     }
+
+    setIsLoading(true);
 
     const formData = new FormData();
     formData.append('email', email);
@@ -41,6 +44,8 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
     } catch (err) {
       // In Next.js, redirect() inside a server action throws an error that is caught here.
       // We can ignore it because Next.js handles the redirect automatically.
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -132,14 +137,19 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
           <div className="flex flex-col gap-3 mt-4">
             <button 
               type="submit"
-              className="w-full bg-[#4A696C] text-white font-medium rounded-md px-4 py-2.5 text-sm hover:bg-[#3A5658] transition-colors shadow-lg shadow-[#4A696C]/20"
+              disabled={isLoading}
+              className={`w-full bg-[#4A696C] text-white font-medium rounded-md px-4 py-2.5 text-sm transition-all shadow-lg shadow-[#4A696C]/20 ${isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-[#3A5658]'}`}
             >
-              {isSignUp ? 'Sign Up' : 'Sign In'}
+              {isLoading ? (isSignUp ? 'Signing up...' : 'Logging in...') : (isSignUp ? 'Sign Up' : 'Log In')}
             </button>
             <button 
-              type="button"
-              onClick={() => { setIsSignUp(!isSignUp); setValidationError(''); }}
-              className="w-full bg-transparent text-[#a1a1aa] hover:text-[#ededed] border border-[#333333] hover:border-[#4A696C] font-medium rounded-md px-4 py-2.5 text-sm transition-colors"
+              type="button" 
+              onClick={() => {
+                setIsSignUp(!isSignUp);
+                setValidationError('');
+                setSuccessMessage('');
+              }}
+              className="text-xs text-[#a1a1aa] hover:text-white transition-colors py-2"
             >
               {isSignUp ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
             </button>
