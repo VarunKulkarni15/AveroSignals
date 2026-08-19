@@ -20,6 +20,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
   const [iconUrl, setIconUrl] = useState('');
   const [broadcastCount, setBroadcastCount] = useState<number>(0);
   const [icon, setIcon] = useState('https://img.icons8.com/fluency/48/bell.png');
+  const [secretApiKey, setSecretApiKey] = useState('');
   const [previewOS, setPreviewOS] = useState<'windows' | 'mac' | 'android' | 'ios'>('windows');
   
   const [targetOS, setTargetOS] = useState('All');
@@ -53,6 +54,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
           setSiteUrl(data.site_url || '');
           setIconUrl(data.icon_url || '');
           setBroadcastCount(data.broadcast_count || 0);
+          setSecretApiKey(data.secret_api_key || '');
         }
       });
 
@@ -469,6 +471,30 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
               )}
             </div>
           </form>
+
+          <div className="mt-12 pt-8 border-t border-border-main">
+            <h3 className="text-white font-medium mb-2">Developer Settings</h3>
+            <p className="text-sm text-zinc-400 mb-4">Use this Secret API Key to programmatically send push notifications from your backend servers.</p>
+            <div className="bg-bg-main border border-border-main rounded-lg p-4 flex items-center justify-between">
+              <div>
+                <p className="text-xs text-zinc-500 font-semibold uppercase tracking-wider mb-1">Secret API Key</p>
+                <p className="font-mono text-sm text-[#8BAAA8] select-all">{secretApiKey || 'Loading...'}</p>
+              </div>
+              <button 
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText(secretApiKey);
+                  alert('API Key copied to clipboard!');
+                }}
+                className="bg-bg-input border border-border-main hover:border-[#8BAAA8] text-white px-4 py-2 rounded-md text-sm transition-colors"
+              >
+                Copy Key
+              </button>
+            </div>
+            <div className="mt-4">
+              <Link href="/dashboard/docs" className="text-sm text-[#8BAAA8] hover:text-white underline underline-offset-4">Read the API Documentation →</Link>
+            </div>
+          </div>
 
           <div className="mt-12 pt-8 border-t border-red-500/20">
             <h3 className="text-red-400 font-medium mb-2">Danger Zone</h3>
