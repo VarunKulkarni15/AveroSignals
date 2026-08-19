@@ -27,6 +27,11 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
   const [settingsLoading, setSettingsLoading] = useState(false);
   const [settingsStatus, setSettingsStatus] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [scriptTag, setScriptTag] = useState('');
+
+  useEffect(() => {
+    setScriptTag(`<script src="${window.location.origin}/api/sdk" data-project-id="${projectId}"></script>`);
+  }, [projectId]);
 
   useEffect(() => {
     const supabase = createBrowserClient(
@@ -189,12 +194,12 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
         </h2>
         <p className="text-sm text-[#a1a1aa] mb-4">Paste this script tag anywhere in the <code className="text-[#8BAAA8] bg-[#000000] px-1 py-0.5 rounded">&lt;head&gt;</code> of your website to enable push notifications. It will automatically detect your Site URL and Favicon!</p>
         <div className="relative group">
-          <pre className="bg-[#000000] border border-[#333333] p-4 rounded-lg overflow-x-auto text-sm text-[#ededed] font-mono">
-            {`<script src="https://cdn.pushhub.com/v1/sdk.js" data-project-id="${projectId}"></script>`}
+          <pre className="bg-[#000000] border border-[#333333] p-4 rounded-lg overflow-x-auto text-sm text-[#ededed] font-mono whitespace-pre-wrap break-all">
+            {scriptTag || 'Loading...'}
           </pre>
           <button 
             onClick={() => {
-              navigator.clipboard.writeText(`<script src="https://cdn.pushhub.com/v1/sdk.js" data-project-id="${projectId}"></script>`);
+              navigator.clipboard.writeText(scriptTag);
               alert('Script copied to clipboard!');
             }}
             className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-[#111111] border border-[#333333] rounded px-3 py-1.5 text-xs text-[#a1a1aa] hover:text-white"
