@@ -417,7 +417,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                 image={image} 
                 appName={appName} 
                 siteUrl={siteUrl}
-                icon={icon} 
+                icon={iconUrl || icon} 
                 os={previewOS} 
               />
             </div>
