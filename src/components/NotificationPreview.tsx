@@ -24,16 +24,16 @@ export default function NotificationPreview({ title, body, image, appName, siteU
 
   if (os === 'windows') {
     return (
-      <div className="relative w-full max-w-[420px] h-[320px] bg-[#001940] rounded-xl overflow-hidden shadow-2xl border border-border-main font-sans flex flex-col mx-auto">
+      <div className="relative w-full max-w-[480px] h-[320px] bg-[#001940] rounded-xl overflow-hidden shadow-2xl border border-border-main font-sans flex flex-col mx-auto">
         {/* Desktop Area */}
         <div className="flex-1 relative">
           {/* Notification Card - NO ANIMATION for instant switching */}
-          <div className="absolute bottom-4 right-3 w-[340px] bg-[#2b2b2b] border border-[#444] rounded shadow-2xl flex flex-col overflow-hidden text-left pb-3">
+          <div className="absolute bottom-4 right-3 w-[380px] bg-[#2b2b2b] border border-[#444] rounded shadow-2xl flex flex-col overflow-hidden text-left pb-3">
             <div className="flex items-center justify-between px-3 py-2">
-              <div className="flex items-center gap-2">
-                <span className="text-[#a1a1aa] text-[11px] font-medium tracking-wide">Google Chrome • {shortUrl}</span>
+              <div className="flex items-center gap-2 flex-1 min-w-0 pr-2">
+                <span className="text-[#a1a1aa] text-[11px] font-medium tracking-wide truncate">Google Chrome • {shortUrl}</span>
               </div>
-              <div className="flex items-center gap-3 text-[#a1a1aa]">
+              <div className="flex items-center gap-3 text-[#a1a1aa] shrink-0">
                 <span className="text-[14px]">⋯</span>
                 <span className="text-[12px]">✕</span>
               </div>
