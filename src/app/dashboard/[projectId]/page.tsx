@@ -145,6 +145,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
       const res = await deleteProject(projectId);
       if (res.success) {
         router.push('/dashboard');
+        router.refresh(); // Invalidate cache so dashboard updates
       } else {
         alert(res.error || 'Failed to delete project');
         setIsDeleting(false);
@@ -157,9 +158,50 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
 
   return (
     <div className="max-w-7xl mx-auto px-8 py-12 animate-in fade-in duration-500">
-      <div className="mb-10">
-        <h1 className="text-3xl font-semibold text-white tracking-tight mb-2">Project Workspace</h1>
-        <p className="text-[#a1a1aa] text-sm font-mono">ID: {projectId}</p>
+      <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-semibold text-white tracking-tight mb-2">Project Workspace</h1>
+          <div className="flex items-center gap-3">
+            <span className="text-[#a1a1aa] text-sm font-mono">ID: {projectId}</span>
+            <button 
+              onClick={() => {
+                navigator.clipboard.writeText(projectId);
+                alert('Project ID copied to clipboard!');
+              }}
+              className="text-[#8BAAA8] hover:text-white transition-colors bg-[#111111] border border-[#333333] rounded px-2 py-1 text-xs flex items-center gap-1"
+            >
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      {/* Quick Start Guide */}
+      <div className="mb-10 bg-[#111111]/50 border border-[#8BAAA8]/20 rounded-xl p-6">
+        <h2 className="text-lg font-medium text-white mb-2 flex items-center gap-2">
+          <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Quick Start Installation
+        </h2>
+        <p className="text-sm text-[#a1a1aa] mb-4">Paste this script tag anywhere in the <code className="text-[#8BAAA8] bg-[#000000] px-1 py-0.5 rounded">&lt;head&gt;</code> of your website to enable push notifications. It will automatically detect your Site URL and Favicon!</p>
+        <div className="relative group">
+          <pre className="bg-[#000000] border border-[#333333] p-4 rounded-lg overflow-x-auto text-sm text-[#ededed] font-mono">
+            {`<script src="https://cdn.pushhub.com/v1/sdk.js" data-project-id="${projectId}"></script>`}
+          </pre>
+          <button 
+            onClick={() => {
+              navigator.clipboard.writeText(`<script src="https://cdn.pushhub.com/v1/sdk.js" data-project-id="${projectId}"></script>`);
+              alert('Script copied to clipboard!');
+            }}
+            className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-[#111111] border border-[#333333] rounded px-3 py-1.5 text-xs text-[#a1a1aa] hover:text-white"
+          >
+            Copy Code
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">

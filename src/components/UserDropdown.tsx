@@ -31,7 +31,7 @@ export default function UserDropdown({ email, avatarUrl }: { email: string, avat
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-[#111111] border border-[#333333] rounded-lg shadow-2xl py-1 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+        <div className="absolute left-12 bottom-0 mb-0 w-56 bg-[#111111] border border-[#333333] rounded-lg shadow-2xl py-1 z-50 animate-in fade-in slide-in-from-bottom-2 duration-150">
           <div className="px-4 py-3 border-b border-[#222222]">
             <p className="text-sm font-medium text-[#ededed] truncate">Signed in as</p>
             <p className="text-xs text-[#a1a1aa] truncate mt-0.5">{email}</p>
