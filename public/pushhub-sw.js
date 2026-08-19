@@ -8,7 +8,8 @@ self.addEventListener('push', function(event) {
         image: data.image || undefined,
         badge: '/icon.png',
         data: {
-          url: data.url || '/'
+          url: data.url || '/',
+          broadcastId: data.broadcastId || null
         }
       };
 
@@ -27,9 +28,23 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
-  if (event.notification.data && event.notification.data.url) {
+  
+  const clickData = event.notification.data;
+  
+  if (clickData && clickData.broadcastId) {
+    // Ping the tracking endpoint in the background
     event.waitUntil(
-      clients.openWindow(event.notification.data.url)
+      fetch('/api/track/click', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ broadcastId: clickData.broadcastId })
+      }).catch(e => console.error('Tracking failed', e))
+    );
+  }
+
+  if (clickData && clickData.url) {
+    event.waitUntil(
+      clients.openWindow(clickData.url)
     );
   }
 });

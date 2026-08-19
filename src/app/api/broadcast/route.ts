@@ -65,10 +65,38 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'No subscribers found for this segment.' }, { status: 400 });
     }
 
+    // Save the broadcast to the database
+    let broadcastId = null;
+    const { data: bData, error: bError } = await supabase.from('broadcasts').insert({
+      project_id: projectId,
+      title: title || 'New Notification',
+      body: body || 'You have a new update!',
+      image: image || null,
+      target_os: targetOS || 'All',
+      target_region: targetRegion || 'All',
+      status: scheduleTime ? 'scheduled' : 'sent',
+      scheduled_for: scheduleTime ? new Date(scheduleTime).toISOString() : null
+    }).select('id').single();
+
+    if (bData) {
+      broadcastId = bData.id;
+    }
+
+    if (scheduleTime) {
+      const targetTime = new Date(scheduleTime).getTime();
+      const delay = targetTime - Date.now();
+      
+      // We will rely on Vercel cron to pick it up later if delay is > 1 min
+      // But if it's very soon (e.g. < 5 mins), we could just let the cron do it
+      // For reliable scheduling, we should entirely rely on cron, but we return a success response immediately.
+      return NextResponse.json({ sent: 'Scheduled', message: `Scheduled to send to ${subscriptions.length} users.`, broadcastId });
+    }
+
     const payload = JSON.stringify({
       title: title || 'New Notification',
       body: body || 'You have a new update!',
-      image: image || undefined
+      image: image || undefined,
+      broadcastId: broadcastId // Pass this to the service worker for click tracking!
     });
 
     const webPushSubs = subscriptions.map(sub => sub.subscription_data);
@@ -86,24 +114,17 @@ export async function POST(req: Request) {
       return sentCount;
     };
 
-    if (scheduleTime) {
-      const targetTime = new Date(scheduleTime).getTime();
-      const delay = targetTime - Date.now();
-      if (delay > 0) {
-        setTimeout(() => sendPush(), delay);
-        return NextResponse.json({ sent: 'Scheduled', message: `Scheduled to send to ${subscriptions.length} users.` });
-      }
-    }
-
     const sent = await sendPush();
 
     // Increment broadcast count in the project table
-    const { data: project } = await supabase.from('projects').select('broadcast_count').eq('id', projectId).single();
-    if (project) {
-      await supabase.from('projects').update({ broadcast_count: (project.broadcast_count || 0) + 1 }).eq('id', projectId);
+    await supabase.from('projects').update({ broadcast_count: (project.broadcast_count || 0) + 1 }).eq('id', projectId);
+    
+    // Update the sent count on the broadcast
+    if (broadcastId) {
+      await supabase.from('broadcasts').update({ sent_count: sent }).eq('id', broadcastId);
     }
     
-    return NextResponse.json({ success: true, sent });
+    return NextResponse.json({ success: true, sent, broadcastId });
   } catch (error) {
     console.error('Broadcast error:', error);
     return NextResponse.json({ error: 'Failed to broadcast' }, { status: 500 });

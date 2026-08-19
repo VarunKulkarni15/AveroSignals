@@ -9,11 +9,13 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
   const [isExpanded, setIsExpanded] = useState(false)
   const [toastMessage, setToastMessage] = useState<string | null>(null)
   const pathname = usePathname()
+  const pathParts = pathname.split('/');
+  const projectId = (pathParts.length >= 3 && pathParts[1] === 'dashboard' && pathParts[2] !== 'docs') ? pathParts[2] : null;
 
   const navItems = [
     {
       name: 'Dashboard',
-      href: '/dashboard',
+      href: projectId ? `/dashboard/${projectId}` : '/dashboard',
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -22,8 +24,8 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
     },
     {
       name: 'Campaigns',
-      href: '#',
-      isPro: true,
+      href: projectId ? `/dashboard/${projectId}/campaigns` : '/dashboard',
+      isPro: false,
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
@@ -141,6 +143,10 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
                 if ((item as any).isPro) {
                   e.preventDefault();
                   setToastMessage(`${item.name} is currently in development! Upgrade coming soon.`);
+                  setTimeout(() => setToastMessage(null), 3000);
+                } else if (item.name === 'Campaigns' && !projectId) {
+                  e.preventDefault();
+                  setToastMessage(`Select a project first to view Campaigns.`);
                   setTimeout(() => setToastMessage(null), 3000);
                 }
               }}
