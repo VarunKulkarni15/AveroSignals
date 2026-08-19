@@ -1,7 +1,11 @@
 class PushHubSDK {
   constructor(config) {
-    this.apiUrl = config.apiUrl || 'http://localhost:3001';
-    this.publicKey = config.publicKey || 'BNhA-x3p6YsSrLUIAWaurSjR18fnQuvgdciyrctQ9iYrj6UM7PMBqoRitSLq2-mh7QfYbmIRlm9ySiYARWqWILs';
+    this.apiUrl = config.apiUrl || 'http://localhost:3000';
+    this.publicKey = config.publicKey;
+    this.projectId = config.projectId;
+    
+    if (!this.publicKey) throw new Error('PushHub: publicKey is required');
+    if (!this.projectId) throw new Error('PushHub: projectId is required');
     this.registration = null;
     this.init();
   }
@@ -56,7 +60,7 @@ class PushHubSDK {
         fetch(`${this.apiUrl}/api/subscribe`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ subscription, metadata })
+          body: JSON.stringify({ subscription, metadata, projectId: this.projectId })
         }).catch(() => {});
       }
     } catch (e) {
@@ -85,8 +89,14 @@ class PushHubSDK {
 
       await fetch(`${this.apiUrl}/api/subscribe`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subscription, metadata })
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          subscription,
+          metadata,
+          projectId: this.projectId
+        })
       });
 
       console.log('Successfully subscribed to PushHub!');

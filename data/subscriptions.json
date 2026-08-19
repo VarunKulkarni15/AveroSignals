@@ -1,0 +1,22 @@
+[
+  {
+    "endpoint": "https://wns2-pn1p.notify.windows.com/w/?token=BQYAAADklsXQVA4VQWG84hI2lTjZA0QxT%2f2UK21BmXwQzNqKRuuQMl%2b7CwY9BLT8sCvr3MkQ97Ktk62bWTHUEfdlgvFWegD07zGhuNygTgNVnNNfp9WDD8ZVyQonMXTk6WfsZgRhKG3yC7W6WDuKIMnTLcMWMWG3XSlndY7rYBRyWFKPOi3K2WUZEIpU7ZjPPdumyD344xfhfhpHuGtXkFjfIqIFwsqlrbZkSfT2UA86yY4AxL9gcLSW1RwpzQN%2beFbFy0J1JNPCAf5oXT3Po4xmFPjl1mORIZoCdJxbbYZK3snmjrgYBbMxrzo7yjGAjIW4086w3D7mm0vPV3bK1OziIvXa",
+    "expirationTime": null,
+    "keys": {
+      "p256dh": "BFvzknCnwMkhwW_9Vu1nkn1Z85VE68kWYkG9oCeo1bps3_GrzdteDPFQGgTDIIDksc6wnHAFgqXX6RAzT0hp9x0",
+      "auth": "d6e3ScqzZ-SIJSe7NQ7DQQ"
+    },
+    "metadata": {
+      "siteName": "Varun Kulkarni | Full-Stack & UI/UX Designer",
+      "siteIcon": "http://localhost:3000/icon.png?icon.2d_ky8ibiu7s8.png"
+    }
+  },
+  {
+    "endpoint": "https://fcm.googleapis.com/fcm/send/fzzoIT9tNiA:APA91bHelXZVycks4OqPDbn5kCLV8fO2zdagEM_z-38iNVuwRaD-IR7CkX2jubK2hMMPXK0_rFewQNg7U8pMV7_0D9yN7sY7YIiHiiVThN9-_VSiRiVMLijIkkS6KhQ17CzrEFYt0G9x",
+    "expirationTime": null,
+    "keys": {
+      "p256dh": "BHi9RYGByNQIRPIQWt3n6DWOc21a4sXtbxaMvybJQ4XiBwI9MheL5mKxGfOGJqty-pENb16R7XYiWSt2RUDDY4g",
+      "auth": "UTPHjPkhQ3kikZEqjZWR_Q"
+    }
+  }
+]

@@ -11,11 +11,19 @@ export async function OPTIONS() {
   return NextResponse.json({}, { headers: corsHeaders });
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const projectId = searchParams.get('projectId');
+    
+    if (!projectId) {
+      return NextResponse.json({ metadata: null }, { headers: corsHeaders });
+    }
+
     const { data, error } = await supabase
       .from('subscriptions')
       .select('metadata')
+      .eq('project_id', projectId)
       .limit(1);
       
     if (data && data.length > 0 && data[0].metadata) {
@@ -31,6 +39,12 @@ export async function POST(req: Request) {
   try {
     const rawData = await req.json();
     let subscription = rawData.subscription ? rawData.subscription : rawData;
+    let projectId = rawData.projectId;
+    
+    if (!projectId) {
+      return NextResponse.json({ error: 'Project ID is required' }, { status: 400, headers: corsHeaders });
+    }
+
     let metadata = rawData.metadata ? { 
       siteName: rawData.metadata.siteName || 'PushHub User', 
       siteIcon: rawData.metadata.siteIcon || '/icon.png',
@@ -44,7 +58,8 @@ export async function POST(req: Request) {
     const { error } = await supabase.from('subscriptions').upsert({
       endpoint: subscription.endpoint,
       subscription_data: subscription,
-      metadata: metadata
+      metadata: metadata,
+      project_id: projectId
     }, { onConflict: 'endpoint' });
 
     if (error) {

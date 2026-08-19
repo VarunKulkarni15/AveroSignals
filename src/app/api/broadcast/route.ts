@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import webpush from 'web-push';
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@/utils/supabase/server';
 
 webpush.setVapidDetails(
   'mailto:your-email@example.com',
@@ -10,9 +10,23 @@ webpush.setVapidDetails(
 
 export async function POST(req: Request) {
   try {
-    const { title, body, image, targetOS, scheduleTime } = await req.json();
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
-    const { data, error } = await supabase.from('subscriptions').select('subscription_data, metadata');
+    const { title, body, image, targetOS, scheduleTime, projectId } = await req.json();
+
+    if (!projectId) {
+      return NextResponse.json({ error: 'Project ID is required' }, { status: 400 });
+    }
+
+    const { data, error } = await supabase
+      .from('subscriptions')
+      .select('subscription_data, metadata')
+      .eq('project_id', projectId);
     
     if (error || !data || data.length === 0) {
       return NextResponse.json({ error: 'No subscriptions found' }, { status: 400 });
