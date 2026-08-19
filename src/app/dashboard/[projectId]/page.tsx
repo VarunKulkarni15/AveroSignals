@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import NotificationPreview from '@/components/NotificationPreview';
 
 export default function Dashboard({ params }: { params: { projectId: string } }) {

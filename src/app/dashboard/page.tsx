@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import { revalidatePath } from 'next/cache'
 import CreateProjectForm from './CreateProjectForm'
 
 export default async function DashboardPage() {
@@ -11,10 +12,22 @@ export default async function DashboardPage() {
     redirect('/login')
   }
 
-  const { data: projects, error } = await supabase
+  const { data: projects } = await supabase
     .from('projects')
     .select('*')
     .order('created_at', { ascending: false })
+
+  async function createProject(formData: FormData) {
+    'use server'
+    const name = formData.get('name') as string
+    if (!name?.trim()) return
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      await supabase.from('projects').insert({ name, user_id: user.id })
+      revalidatePath('/dashboard')
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#000000] text-[#ededed] font-sans selection:bg-[#4A696C]/30">
@@ -27,28 +40,13 @@ export default async function DashboardPage() {
           </div>
           <h1 className="font-medium text-lg tracking-wide text-white">PushHub Dashboard</h1>
         </div>
-        <div className="text-sm text-[#a1a1aa]">{user.email}</div>
+        <div className="text-sm text-[#a1a1aa]">{user!.email}</div>
       </header>
 
       <main className="max-w-5xl mx-auto px-8 py-12">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-xl font-medium text-white">Your Projects</h2>
-          
-          <form action={createProject} className="flex gap-2">
-            <input 
-              type="text" 
-              name="name" 
-              placeholder="Project Name..."
-              required
-              className="bg-[#111111] border border-[#333333] rounded-md px-3 py-1.5 text-sm text-[#ededed] focus:outline-none focus:border-[#8BAAA8] transition-colors"
-            />
-            <button 
-              type="submit"
-              className="bg-[#111111] text-[#ededed] font-medium text-sm px-4 py-1.5 rounded-md border border-[#333333] hover:border-[#8BAAA8] hover:text-[#8BAAA8] transition-all"
-            >
-              New Project
-            </button>
-          </form>
+          <CreateProjectForm createProject={createProject} />
         </div>
 
         {(!projects || projects.length === 0) ? (
