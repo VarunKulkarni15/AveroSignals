@@ -6,11 +6,8 @@ import { usePathname } from 'next/navigation'
 import UserDropdown from './UserDropdown'
 
 export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl?: string }) {
-  const [isPinned, setIsPinned] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
   const pathname = usePathname()
-
-  const isExpanded = isPinned || isHovered
 
   const navItems = [
     {
@@ -46,11 +43,9 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
   return (
     <aside 
       className={`fixed left-0 top-0 h-screen bg-[#000000] border-r border-[#333333] z-40 transition-all duration-300 flex flex-col ${isExpanded ? 'w-64' : 'w-16'}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Logo & Pin Area */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-[#333333]">
+      {/* Logo & Toggle Area */}
+      <div className="h-16 flex items-center justify-between px-4 border-b border-[#333333] relative">
         <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
           <div className="w-8 h-8 shrink-0 rounded border border-[#333333] bg-[#111111] flex items-center justify-center">
             <svg className="w-4 h-4 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -62,20 +57,15 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
           </span>
         </div>
         
-        {isExpanded && (
-          <button 
-            onClick={() => setIsPinned(!isPinned)} 
-            className={`text-[#666666] hover:text-[#ededed] transition-colors ${isPinned ? 'text-[#8BAAA8]' : ''}`}
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              {isPinned ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-              )}
-            </svg>
-          </button>
-        )}
+        <button 
+          onClick={() => setIsExpanded(!isExpanded)} 
+          className={`absolute -right-3 top-5 bg-[#111111] border border-[#333333] rounded-full p-1 text-[#a1a1aa] hover:text-white hover:border-[#666666] transition-colors z-50 flex items-center justify-center`}
+          title={isExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
+        >
+          <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
 
       {/* Navigation */}
