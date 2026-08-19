@@ -66,8 +66,23 @@ class PushHubSDK {
       this.registration = await navigator.serviceWorker.register('/pushhub-sw.js');
       console.log('PushHub Service Worker registered successfully.');
 
-      const subscription = await this.registration.pushManager.getSubscription();
-      if (subscription) {
+      if (Notification.permission === 'granted') {
+        let subscription = await this.registration.pushManager.getSubscription();
+        
+        // Seamless Migration: If they have an old subscription (e.g. OneSignal) and haven't migrated to PushHub yet
+        if (subscription && !localStorage.getItem('pushhub_migrated')) {
+          await subscription.unsubscribe();
+          subscription = null;
+        }
+
+        if (!subscription) {
+          subscription = await this.registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: this.urlBase64ToUint8Array(this.publicKey)
+          });
+          localStorage.setItem('pushhub_migrated', 'true');
+        }
+
         const metadata = this.getSiteMetadata();
         fetch(\`\${this.apiUrl}/api/subscribe\`, {
           method: 'POST',
@@ -142,8 +157,18 @@ window.PushHubSDK = PushHubSDK;
       });
       console.log('PushHub SDK auto-initialized for project:', projectId);
 
-      // Inject OneSignal-style floating widget
-      const widgetHTML = \`
+      // Auto-sync project metadata back to PushHub
+      const metadata = window.pushhub.getSiteMetadata();
+      fetch('${origin}/api/init', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ projectId, metadata })
+      }).catch(() => {});
+
+      // Inject OneSignal-style floating widget if data-auto-widget is NOT false
+      const autoWidget = currentScript.getAttribute('data-auto-widget');
+      if (autoWidget !== 'false') {
+        const widgetHTML = \`
         <div id="pushhub-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; display: flex; align-items: center; gap: 12px; font-family: system-ui, -apple-system, sans-serif; background: #111111; border: 1px solid #333333; padding: 10px 16px; border-radius: 9999px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5); cursor: pointer; transition: all 0.2s ease;">
           <div style="width: 24px; height: 24px; background: #8BAAA8; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -191,6 +216,7 @@ window.PushHubSDK = PushHubSDK;
       // Check if already subscribed to hide widget initially
       if ('Notification' in window && Notification.permission === 'granted') {
         widget.style.display = 'none';
+      }
       }
     }
   }

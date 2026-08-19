@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(req: Request) {
   try {
@@ -20,18 +23,26 @@ export async function POST(req: Request) {
     const buffer = Buffer.from(bytes);
 
     const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    
-    try {
-      await fs.mkdir(uploadDir, { recursive: true });
-    } catch (e) {}
 
-    const filePath = path.join(uploadDir, filename);
-    await fs.writeFile(filePath, buffer);
+    // Upload to Supabase Storage
+    const { data, error } = await supabase.storage
+      .from('broadcast-images')
+      .upload(filename, buffer, {
+        contentType: file.type,
+        cacheControl: '3600',
+        upsert: false
+      });
 
-    // Return the absolute URL because the service worker is on localhost:3000
-    // but the image is hosted on localhost:3001
-    return NextResponse.json({ url: `http://localhost:3001/uploads/${filename}` });
+    if (error) {
+      console.error('Supabase Storage error:', error);
+      return NextResponse.json({ error: 'Failed to upload image to storage' }, { status: 500 });
+    }
+
+    const { data: publicUrlData } = supabase.storage
+      .from('broadcast-images')
+      .getPublicUrl(filename);
+
+    return NextResponse.json({ url: publicUrlData.publicUrl });
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
