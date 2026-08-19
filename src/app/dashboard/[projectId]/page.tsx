@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { createBrowserClient } from '@supabase/ssr';
 import NotificationPreview from '@/components/NotificationPreview';
 import { updateProjectSettings, deleteProject } from './actions';
 
@@ -26,20 +28,22 @@ export default function Dashboard({ params }: { params: { projectId: string } })
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    // Fetch actual site metadata from the backend
-    fetch('/api/subscribe')
-      .then(res => res.json())
-      .then(data => {
-        if (data.metadata) {
-          setAppName(data.metadata.siteName || 'My Portfolio');
-          setSiteUrl(data.metadata.siteUrl || 'localhost:3000');
-          if (data.metadata.siteIcon) {
-            setIcon(data.metadata.siteIcon);
-          }
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+    
+    supabase.from('projects')
+      .select('*')
+      .eq('id', params.projectId)
+      .single()
+      .then(({ data }) => {
+        if (data) {
+          setAppName(data.name || '');
+          setSiteUrl(data.site_url || '');
         }
-      })
-      .catch(console.error);
-  }, []);
+      });
+  }, [params.projectId]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -131,11 +135,19 @@ export default function Dashboard({ params }: { params: { projectId: string } })
     }
   };
 
+  const router = useRouter();
+
   const handleDelete = async () => {
     if (!confirm('Are you absolutely sure you want to delete this project? This cannot be undone.')) return;
     setIsDeleting(true);
     try {
-      await deleteProject(params.projectId);
+      const res = await deleteProject(params.projectId);
+      if (res.success) {
+        router.push('/dashboard');
+      } else {
+        alert(res.error || 'Failed to delete project');
+        setIsDeleting(false);
+      }
     } catch (err) {
       alert('Failed to delete project');
       setIsDeleting(false);

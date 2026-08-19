@@ -61,9 +61,9 @@ export default async function DashboardPage() {
               <Link 
                 key={project.id} 
                 href={`/dashboard/${project.id}`}
-                className="group flex flex-col bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#333333] rounded-xl overflow-hidden hover:border-[#8BAAA8] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(139,170,168,0.15)]"
+                className="group flex flex-col bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#333333] rounded-xl overflow-hidden hover:border-[#666666] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(139,170,168,0.05)]"
               >
-                <div className="p-5 flex-1">
+                <div className="p-4 flex-1">
                   <div className="flex items-start justify-between mb-4">
                     {project.site_url ? (
                       <img 

@@ -49,5 +49,5 @@ export async function deleteProject(projectId: string) {
   }
 
   revalidatePath('/dashboard')
-  redirect('/dashboard')
+  return { success: true }
 }
