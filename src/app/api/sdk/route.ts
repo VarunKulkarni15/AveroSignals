@@ -96,23 +96,24 @@ class PushHubSDK {
   }
 
   async promptPush() {
-    if (!this.registration) {
-      if (!('serviceWorker' in navigator)) {
-        console.error('PushHub Error: Service workers are not supported by this browser.');
-        return;
-      }
-      try {
-        this.registration = await navigator.serviceWorker.register('/pushhub-sw.js');
-      } catch (e) {
-        console.error('PushHub Error: Service worker not registered. Ensure pushhub-sw.js is in your root directory.', e);
-        return;
-      }
-    }
     try {
       const permission = await Notification.requestPermission();
       if (permission !== 'granted') {
         console.log('Push notification permission denied.');
         return;
+      }
+
+      if (!this.registration) {
+        if (!('serviceWorker' in navigator)) {
+          console.error('PushHub Error: Service workers are not supported by this browser.');
+          return;
+        }
+        try {
+          this.registration = await navigator.serviceWorker.register('/pushhub-sw.js');
+        } catch (e) {
+          console.error('PushHub Error: Service worker not registered.', e);
+          return;
+        }
       }
       
       const subscription = await this.registration.pushManager.subscribe({
@@ -135,7 +136,6 @@ class PushHubSDK {
       });
 
       console.log('Successfully subscribed to PushHub!');
-      // Removed the alert() to make it completely seamless
     } catch (error) {
       console.error('Error during PushHub subscription:', error);
     }
