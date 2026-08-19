@@ -9,10 +9,12 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validationError, setValidationError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setValidationError('');
+    setSuccessMessage('');
 
     if (!email) {
       setValidationError('Please enter your email address.');
@@ -27,10 +29,18 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
     formData.append('email', email);
     formData.append('password', password);
 
-    if (isSignUp) {
-      await signup(formData);
-    } else {
-      await login(formData);
+    try {
+      const response = isSignUp ? await signup(formData) : await login(formData);
+      
+      if (response?.error) {
+        setValidationError(response.error);
+      } else if (response?.success) {
+        setSuccessMessage(response.success);
+        setIsSignUp(false); // Switch back to login after signup
+      }
+    } catch (err) {
+      // In Next.js, redirect() inside a server action throws an error that is caught here.
+      // We can ignore it because Next.js handles the redirect automatically.
     }
   };
 
@@ -99,6 +109,12 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
           {(validationError || searchParams?.error) && (
             <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md">
               <p className="text-xs text-red-400 text-center">{validationError || searchParams?.error}</p>
+            </div>
+          )}
+
+          {successMessage && (
+            <div className="p-3 bg-[#4A696C]/20 border border-[#8BAAA8]/30 rounded-md">
+              <p className="text-xs text-[#8BAAA8] text-center">{successMessage}</p>
             </div>
           )}
 

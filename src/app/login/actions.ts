@@ -15,7 +15,7 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data)
 
   if (error) {
-    redirect('/login?error=Could not authenticate user')
+    return { error: error.message }
   }
 
   revalidatePath('/', 'layout')
@@ -30,12 +30,17 @@ export async function signup(formData: FormData) {
     password: formData.get('password') as string,
   }
 
-  const { error } = await supabase.auth.signUp(data)
+  const { error, data: authData } = await supabase.auth.signUp(data)
 
   if (error) {
-    redirect('/login?error=Could not create user')
+    return { error: error.message }
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/dashboard')
+  // If email confirmation is required, they won't have a session yet
+  if (authData.user && authData.user.identities && authData.user.identities.length === 0) {
+    return { error: 'Account already exists. Please sign in.' }
+  }
+
+  // Supabase might require email confirmation by default
+  return { success: 'Check your email to confirm your account, then sign in.' }
 }
