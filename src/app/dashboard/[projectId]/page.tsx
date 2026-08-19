@@ -17,6 +17,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
   const [loading, setLoading] = useState(false);
   const [appName, setAppName] = useState('My Application');
   const [siteUrl, setSiteUrl] = useState('');
+  const [iconUrl, setIconUrl] = useState('');
   const [broadcastCount, setBroadcastCount] = useState<number>(0);
   const [icon, setIcon] = useState('https://img.icons8.com/fluency/48/bell.png');
   const [previewOS, setPreviewOS] = useState<'windows' | 'mac' | 'android' | 'ios'>('windows');
@@ -50,6 +51,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
         if (data) {
           setAppName(data.name || '');
           setSiteUrl(data.site_url || '');
+          setIconUrl(data.icon_url || '');
           setBroadcastCount(data.broadcast_count || 0);
         }
       });

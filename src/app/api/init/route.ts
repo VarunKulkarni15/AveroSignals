@@ -30,7 +30,8 @@ export async function POST(req: Request) {
       .from('projects')
       .update({
         site_url: metadata.siteUrl,
-        name: metadata.siteName || 'My Application'
+        name: metadata.siteName || 'My Application',
+        icon_url: metadata.siteIcon || null
       })
       .eq('id', projectId);
 
