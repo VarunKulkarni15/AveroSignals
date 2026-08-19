@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { createProject } from './actions'
+import CreateProjectForm from './CreateProjectForm'
 
 export default async function DashboardPage() {
   const supabase = await createClient()

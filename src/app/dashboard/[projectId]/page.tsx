@@ -70,6 +70,12 @@ export default function Dashboard({ params }: { params: { projectId: string } })
 
   const handleBroadcast = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!title.trim() || !body.trim()) {
+      setStatus('Error: Please fill out both fields.');
+      return;
+    }
+
     setLoading(true);
     setStatus('Broadcasting...');
 
@@ -119,15 +125,14 @@ export default function Dashboard({ params }: { params: { projectId: string } })
       <div className="p-8 md:p-24">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12">
         <div className="flex-1 bg-[#000000] border border-[#333333] rounded-lg p-8">
-          <form onSubmit={handleBroadcast} className="flex flex-col gap-6">
+          <form onSubmit={handleBroadcast} className="space-y-6" noValidate>
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-2">Notification Title</label>
             <input 
               type="text" 
-              required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all"
+              className={`w-full bg-[#111111] border ${status?.includes('fill') ? 'border-red-500/50' : 'border-[#333333]'} rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all`}
               placeholder="e.g. New Project Live!"
             />
           </div>
@@ -135,11 +140,10 @@ export default function Dashboard({ params }: { params: { projectId: string } })
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-2">Notification Body</label>
             <textarea 
-              required
               value={body}
               onChange={(e) => setBody(e.target.value)}
               rows={4}
-              className="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all resize-none"
+              className={`w-full bg-[#111111] border ${status?.includes('fill') ? 'border-red-500/50' : 'border-[#333333]'} rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all resize-none`}
               placeholder="Check out my new portfolio update..."
             />
           </div>
