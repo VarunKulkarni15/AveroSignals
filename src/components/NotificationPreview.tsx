@@ -16,7 +16,7 @@ export default function NotificationPreview({ title, body, image, appName, siteU
   const defaultTitle = title || 'Notification Title';
   const defaultBody = body || 'Notification body text goes here...';
   const defaultIcon = icon || '/icon.png';
-  const defaultAppName = appName || 'PushHub App';
+  const defaultAppName = appName || 'Avero Signals App';
   const displayUrl = siteUrl || defaultAppName;
 
   // Clean hostname for display

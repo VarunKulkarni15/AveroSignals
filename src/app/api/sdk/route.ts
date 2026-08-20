@@ -5,14 +5,14 @@ export async function GET(req: Request) {
   
   // The base SDK class
   const sdkCode = `
-class PushHubSDK {
+class AveroSDK {
   constructor(config) {
     this.apiUrl = config.apiUrl;
     this.publicKey = config.publicKey;
     this.projectId = config.projectId;
     
-    if (!this.publicKey) throw new Error('PushHub: publicKey is required');
-    if (!this.projectId) throw new Error('PushHub: projectId is required');
+    if (!this.publicKey) throw new Error('Avero Signals: publicKey is required');
+    if (!this.projectId) throw new Error('Avero Signals: projectId is required');
     this.registration = null;
     this.init();
   }
@@ -57,20 +57,20 @@ class PushHubSDK {
   async init() {
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
     try {
-      // Register service worker using the absolute URL of the PushHub backend
+      // Register service worker using the absolute URL of the Avero Signals backend
       // Note: For service workers to work on cross-origin, we would technically need the SW hosted on the client's domain.
       // But for this MVP, we will try to register it. If it fails due to cross-origin, the client must host sw.js.
       // A common pattern is to inject an iframe or require the user to download a tiny sw.js file.
-      // We will assume the user downloads 'pushhub-sw.js' to their root for now.
+      // We will assume the user downloads 'avero-sw.js' to their root for now.
       
-      this.registration = await navigator.serviceWorker.register('/pushhub-sw.js');
-      console.log('PushHub Service Worker registered successfully.');
+      this.registration = await navigator.serviceWorker.register('/avero-sw.js');
+      console.log('Avero Signals Service Worker registered successfully.');
 
       if (Notification.permission === 'granted') {
         let subscription = await this.registration.pushManager.getSubscription();
         
-        // Seamless Migration: If they have an old subscription (e.g. OneSignal) and haven't migrated to PushHub yet
-        if (subscription && !localStorage.getItem('pushhub_migrated')) {
+        // Seamless Migration: If they have an old subscription (e.g. OneSignal) and haven't migrated to Avero Signals yet
+        if (subscription && !localStorage.getItem('avero_migrated')) {
           await subscription.unsubscribe();
           subscription = null;
         }
@@ -80,7 +80,7 @@ class PushHubSDK {
             userVisibleOnly: true,
             applicationServerKey: this.urlBase64ToUint8Array(this.publicKey)
           });
-          localStorage.setItem('pushhub_migrated', 'true');
+          localStorage.setItem('avero_migrated', 'true');
         }
 
         const metadata = this.getSiteMetadata();
@@ -91,7 +91,7 @@ class PushHubSDK {
         }).catch(() => {});
       }
     } catch (e) {
-      console.error('PushHub init error:', e);
+      console.error('Avero Signals init error:', e);
     }
   }
 
@@ -105,13 +105,13 @@ class PushHubSDK {
 
       if (!this.registration) {
         if (!('serviceWorker' in navigator)) {
-          console.error('PushHub Error: Service workers are not supported by this browser.');
+          console.error('Avero Signals Error: Service workers are not supported by this browser.');
           return;
         }
         try {
-          this.registration = await navigator.serviceWorker.register('/pushhub-sw.js');
+          this.registration = await navigator.serviceWorker.register('/avero-sw.js');
         } catch (e) {
-          console.error('PushHub Error: Service worker not registered.', e);
+          console.error('Avero Signals Error: Service worker not registered.', e);
           return;
         }
       }
@@ -135,13 +135,13 @@ class PushHubSDK {
         })
       });
 
-      console.log('Successfully subscribed to PushHub!');
+      console.log('Successfully subscribed to Avero Signals!');
     } catch (error) {
-      console.error('Error during PushHub subscription:', error);
+      console.error('Error during Avero Signals subscription:', error);
     }
   }
 }
-window.PushHubSDK = PushHubSDK;
+window.AveroSDK = AveroSDK;
 
 // Auto-initialize if data-project-id is present on the script tag
 (function() {
@@ -157,15 +157,15 @@ window.PushHubSDK = PushHubSDK;
   if (currentScript) {
     const projectId = currentScript.getAttribute('data-project-id');
     if (projectId) {
-      window.pushhub = new PushHubSDK({
+      window.avero = new AveroSDK({
         projectId: projectId,
         publicKey: '${process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY}',
         apiUrl: '${origin}'
       });
-      console.log('PushHub SDK auto-initialized for project:', projectId);
+      console.log('Avero Signals SDK auto-initialized for project:', projectId);
 
-      // Auto-sync project metadata back to PushHub
-      const metadata = window.pushhub.getSiteMetadata();
+      // Auto-sync project metadata back to Avero Signals
+      const metadata = window.avero.getSiteMetadata();
       fetch('${origin}/api/init', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -209,7 +209,7 @@ window.PushHubSDK = PushHubSDK;
       widget.addEventListener('click', async () => {
         const originalText = widget.querySelector('span').innerText;
         widget.querySelector('span').innerText = 'Loading...';
-        await window.pushhub.promptPush();
+        await window.avero.promptPush();
         
         // Hide widget after successful subscription
         if (Notification.permission === 'granted') {

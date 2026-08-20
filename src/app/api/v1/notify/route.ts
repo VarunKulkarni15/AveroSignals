@@ -84,7 +84,7 @@ export async function POST(req: Request) {
         await webpush.sendNotification(sub, payload);
         sentCount++;
       } catch (error) {
-        console.error('PushHub API Error sending to subscriber:', error);
+        console.error('Avero Signals API Error sending to subscriber:', error);
       }
     }
 
@@ -96,7 +96,7 @@ export async function POST(req: Request) {
     
     return NextResponse.json({ success: true, sent: sentCount });
   } catch (error: any) {
-    console.error('PushHub API Error:', error.message);
+    console.error('Avero Signals API Error:', error.message);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

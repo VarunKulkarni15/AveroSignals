@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     // Get host for Service Worker tracking
     const host = req.headers.get('host') || 'localhost:3000';
     const protocol = host.includes('localhost') ? 'http' : 'https';
-    const pushhubUrl = `${protocol}://${host}`;
+    const averoUrl = `${protocol}://${host}`;
   
     if (!projectId || !title || !body) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -103,7 +103,7 @@ export async function POST(req: Request) {
       body: body || 'You have a new update!',
       image: image || undefined,
       broadcastId: broadcastId,
-      pushhubUrl: pushhubUrl
+      averoUrl: averoUrl
     });
 
     const webPushSubs = subscriptions.map(sub => sub.subscription_data);

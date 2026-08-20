@@ -46,14 +46,14 @@ export async function POST(req: Request) {
     }
 
     let metadata = rawData.metadata ? { 
-      siteName: rawData.metadata.siteName || 'PushHub User', 
+      siteName: rawData.metadata.siteName || 'Avero Signals User', 
       siteIcon: rawData.metadata.siteIcon || '/icon.png',
       siteUrl: rawData.metadata.siteUrl || 'localhost',
       siteDescription: rawData.metadata.siteDescription || '',
       os: rawData.metadata.os || 'Unknown',
       browser: rawData.metadata.browser || 'Unknown',
       timezone: rawData.metadata.timezone || 'UTC'
-    } : { siteName: 'PushHub User', siteIcon: '/icon.png' };
+    } : { siteName: 'Avero Signals User', siteIcon: '/icon.png' };
 
     const { error } = await supabase.from('subscriptions').upsert({
       endpoint: subscription.endpoint,

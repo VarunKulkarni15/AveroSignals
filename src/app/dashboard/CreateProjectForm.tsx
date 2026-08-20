@@ -75,7 +75,7 @@ export default function CreateProjectForm({ createProject }: { createProject: (f
                   placeholder="https://example.com"
                   className={`w-full bg-bg-main border ${error.includes('fields') ? 'border-red-500/50' : 'border-border-main'} rounded-lg px-4 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-[#8BAAA8] transition-all`}
                 />
-                <p className="text-xs text-zinc-500 mt-2">The domain where you will install the PushHub script.</p>
+                <p className="text-xs text-zinc-500 mt-2">The domain where you will install the Avero Signals script.</p>
               </div>
 
               {error && (

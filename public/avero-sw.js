@@ -10,7 +10,7 @@ self.addEventListener('push', function(event) {
         data: {
           url: data.url || '/',
           broadcastId: data.broadcastId || null,
-          pushhubUrl: data.pushhubUrl || null
+          averoUrl: data.averoUrl || null
         }
       };
 
@@ -32,10 +32,10 @@ self.addEventListener('notificationclick', function(event) {
   
   const clickData = event.notification.data;
   
-  if (clickData && clickData.broadcastId && clickData.pushhubUrl) {
+  if (clickData && clickData.broadcastId && clickData.averoUrl) {
     // Ping the tracking endpoint in the background
     event.waitUntil(
-      fetch(`${clickData.pushhubUrl}/api/track/click`, {
+      fetch(`${clickData.averoUrl}/api/track/click`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ broadcastId: clickData.broadcastId })

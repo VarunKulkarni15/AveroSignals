@@ -62,7 +62,7 @@ export default async function DashboardPage() {
               </svg>
             </div>
             <p className="text-[#ededed] font-medium mb-2">No projects yet</p>
-            <p className="text-sm text-[#a1a1aa] max-w-md mx-auto">Create your first PushHub project to get your integration API keys and start sending notifications.</p>
+            <p className="text-sm text-[#a1a1aa] max-w-md mx-auto">Create your first Avero Signals project to get your integration API keys and start sending notifications.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

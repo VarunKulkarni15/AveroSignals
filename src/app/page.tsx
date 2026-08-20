@@ -12,7 +12,7 @@ export default function LandingPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
           </div>
-          <h1 className="font-medium text-lg tracking-wide text-white">PushHub</h1>
+          <h1 className="font-medium text-lg tracking-wide text-white">Avero Signals</h1>
         </div>
         <div className="flex gap-4 items-center">
           <Link href="/login" className="text-[#a1a1aa] hover:text-[#ededed] transition-colors py-2 text-sm font-medium">Log in</Link>

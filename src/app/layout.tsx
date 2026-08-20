@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PushHub",
+  title: "Avero Signals",
   description: "Enterprise Push Notification Platform",
 };
 

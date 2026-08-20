@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="https://img.icons8.com/fluency/96/bell.png" alt="PushHub Logo" width="80" height="80">
-  <h1 align="center">PushHub 🚀</h1>
+  <img src="https://img.icons8.com/fluency/96/bell.png" alt="Avero Signals Logo" width="80" height="80">
+  <h1 align="center">Avero Signals 🚀</h1>
   <p align="center">
     <strong>The Modern Web Push Notification SaaS</strong>
     <br/>
@@ -8,15 +8,15 @@
   </p>
 </div>
 
-PushHub is a blazing-fast, developer-first SaaS platform that makes integrating Web Push Notifications into any website effortless. Built with a sleek Supabase-inspired UI, it allows you to manage subscribers, preview notifications on multiple operating systems natively, and broadcast campaigns instantly.
+Avero Signals is a blazing-fast, developer-first SaaS platform that makes integrating Web Push Notifications into any website effortless. Built with a sleek Supabase-inspired UI, it allows you to manage subscribers, preview notifications on multiple operating systems natively, and broadcast campaigns instantly.
 
 ## ✨ How It Works
 
-PushHub provides a **Drop-in JavaScript SDK** that works universally across *any* framework (React, Vue, Next.js, WordPress, Webflow, or pure HTML). 
+Avero Signals provides a **Drop-in JavaScript SDK** that works universally across *any* framework (React, Vue, Next.js, WordPress, Webflow, or pure HTML). 
 
 1. **Install the SDK:** Add a single `<script>` tag to your website's `<head>`.
-2. **Auto-Sync:** When a user clicks "Accept & Notify", the SDK automatically scrapes their device OS, Browser, Timezone, and your website's high-res icon and syncs it to the PushHub Dashboard.
-3. **Broadcast:** Log into the PushHub Dashboard, type your message, see a 100% accurate native OS preview, and hit send!
+2. **Auto-Sync:** When a user clicks "Accept & Notify", the SDK automatically scrapes their device OS, Browser, Timezone, and your website's high-res icon and syncs it to the Avero Signals Dashboard.
+3. **Broadcast:** Log into the Avero Signals Dashboard, type your message, see a 100% accurate native OS preview, and hit send!
 
 ## 🚀 Key Features
 
@@ -29,10 +29,10 @@ PushHub provides a **Drop-in JavaScript SDK** that works universally across *any
 
 ## 🗺️ Roadmap & Future Goals
 
-We are aggressively building PushHub to rival enterprise tools like OneSignal. Here is what we are launching next to attract more developers:
+We are aggressively building Avero Signals to rival enterprise tools like OneSignal. Here is what we are launching next to attract more developers:
 
 - [ ] **API Keys Engine:** Generate secret `PUSH_HUB_SECRET_KEY`s to programmatically trigger push notifications from your backend servers (Node.js, Python, etc.) when events happen (e.g., "New Sale!").
-- [ ] **Resend Email Integration:** Automated transactional welcome emails for new developers who sign up for PushHub.
+- [ ] **Resend Email Integration:** Automated transactional welcome emails for new developers who sign up for Avero Signals.
 - [ ] **Campaign Analytics:** Deep insights into "Sent", "Delivered", and "Clicked" metrics for every broadcast.
 - [ ] **Automated Workflows (Journeys):** Send automated push notifications 3 days after a user subscribes.
 - [ ] **Auto-Cleanup:** Edge Functions to automatically purge temporary notification assets after 2 days to save server storage.

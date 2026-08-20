@@ -1,11 +1,11 @@
-class PushHubSDK {
+class AveroSDK {
   constructor(config) {
     this.apiUrl = config.apiUrl || 'http://localhost:3000';
     this.publicKey = config.publicKey;
     this.projectId = config.projectId;
     
-    if (!this.publicKey) throw new Error('PushHub: publicKey is required');
-    if (!this.projectId) throw new Error('PushHub: projectId is required');
+    if (!this.publicKey) throw new Error('Avero Signals: publicKey is required');
+    if (!this.projectId) throw new Error('Avero Signals: projectId is required');
     this.registration = null;
     this.init();
   }
@@ -50,8 +50,8 @@ class PushHubSDK {
   async init() {
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
     try {
-      this.registration = await navigator.serviceWorker.register('/pushhub-sw.js');
-      console.log('PushHub Service Worker registered successfully.');
+      this.registration = await navigator.serviceWorker.register('/avero-sw.js');
+      console.log('Avero Signals Service Worker registered successfully.');
 
       // Auto-update metadata in the background if already subscribed
       const subscription = await this.registration.pushManager.getSubscription();
@@ -70,7 +70,7 @@ class PushHubSDK {
 
   async promptPush() {
     if (!this.registration) {
-      console.log('PushHub: Service worker not registered yet.');
+      console.log('Avero Signals: Service worker not registered yet.');
       return;
     }
     try {
@@ -99,10 +99,10 @@ class PushHubSDK {
         })
       });
 
-      console.log('Successfully subscribed to PushHub!');
+      console.log('Successfully subscribed to Avero Signals!');
     } catch (error) {
-      console.error('Error during PushHub subscription:', error);
+      console.error('Error during Avero Signals subscription:', error);
     }
   }
 }
-window.PushHubSDK = PushHubSDK;
+window.AveroSDK = AveroSDK;

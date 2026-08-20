@@ -116,7 +116,7 @@ export default function Sidebar({ email, avatarUrl }: { email: string, avatarUrl
             </svg>
           </div>
           <span className={`font-medium text-lg tracking-wide text-white transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
-            PushHub
+            Avero Signals
           </span>
         </div>
         

@@ -3,7 +3,7 @@ export default function DocsPage() {
     <div className="max-w-4xl mx-auto px-8 py-12 animate-in fade-in duration-500">
       <div className="mb-12">
         <h1 className="text-3xl font-semibold text-white tracking-tight mb-3">API Documentation</h1>
-        <p className="text-zinc-400 text-lg">Learn how to integrate PushHub into your application and trigger push notifications programmatically.</p>
+        <p className="text-zinc-400 text-lg">Learn how to integrate Avero Signals into your application and trigger push notifications programmatically.</p>
       </div>
 
       <div className="space-y-12">
@@ -27,7 +27,7 @@ export default function DocsPage() {
               </pre>
             </div>
             <p className="text-sm text-zinc-500 mt-4">
-              Once added, the SDK will automatically prompt users to subscribe when they interact with your site, and it will auto-sync your site's favicon and URL to the PushHub dashboard!
+              Once added, the SDK will automatically prompt users to subscribe when they interact with your site, and it will auto-sync your site's favicon and URL to the Avero Signals dashboard!
             </p>
           </div>
         </section>

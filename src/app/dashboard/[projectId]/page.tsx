@@ -642,7 +642,7 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
                       </div>
                       <button 
                         onClick={async () => {
-                          window.open(`https://twitter.com/intent/tweet?text=Just%20started%20using%20PushHub%20for%20my%20push%20notifications!%20%40PushHubApp&url=${encodeURIComponent(window.location.origin)}`, '_blank');
+                          window.open(`https://twitter.com/intent/tweet?text=Just%20started%20using%20Avero Signals%20for%20my%20push%20notifications!%20%40Avero SignalsApp&url=${encodeURIComponent(window.location.origin)}`, '_blank');
                           const res = await grantQuota(projectId, 2500);
                           if (res.success) {
                             alert("Thank you for sharing! +2,500 Broadcasts added.");
