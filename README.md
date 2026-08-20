@@ -4,7 +4,7 @@
   <p align="center">
     <strong>The Modern Web Push Notification SaaS</strong>
     <br/>
-    <a href="https://pushhub.varunkulkarni.dpdns.org">Live Demo (pushhub.varunkulkarni.dpdns.org)</a>
+    <a href="https://averosignals.dpdns.org">Live Demo (averosignals.dpdns.org)</a>
   </p>
 </div>
 

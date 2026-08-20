@@ -2,6 +2,14 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
+  const host = request.headers.get('host');
+  const targetDomain = 'averosignals.dpdns.org';
+
+  if (host && !host.includes('localhost') && host !== targetDomain) {
+    const redirectUrl = `https://${targetDomain}${request.nextUrl.pathname}${request.nextUrl.search}`;
+    return NextResponse.redirect(redirectUrl, 308); // 308 preserves method and body for POST requests
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   })

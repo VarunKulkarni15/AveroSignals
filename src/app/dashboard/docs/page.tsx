@@ -23,7 +23,7 @@ export default function DocsPage() {
                 <span className="text-xs font-mono text-zinc-500">HTML / Next.js / React</span>
               </div>
               <pre className="p-4 overflow-x-auto text-sm text-zinc-300 font-mono">
-                {`<script src="https://pushhub.varunkulkarni.dpdns.org/api/sdk" data-project-id="YOUR_PROJECT_ID"></script>`}
+                {`<script src="https://averosignals.dpdns.org/api/sdk" data-project-id="YOUR_PROJECT_ID"></script>`}
               </pre>
             </div>
             <p className="text-sm text-zinc-500 mt-4">
@@ -56,7 +56,7 @@ export default function DocsPage() {
             <h3 className="text-white font-medium mb-3">cURL Example</h3>
             <div className="bg-bg-input border border-border-main rounded-lg overflow-hidden mb-6">
               <pre className="p-4 overflow-x-auto text-sm text-zinc-300 font-mono whitespace-pre-wrap">
-{`curl -X POST https://pushhub.varunkulkarni.dpdns.org/api/v1/notify \\
+{`curl -X POST https://averosignals.dpdns.org/api/v1/notify \\
   -H "Authorization: Bearer YOUR_SECRET_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -70,7 +70,7 @@ export default function DocsPage() {
             <h3 className="text-white font-medium mb-3">Node.js (Fetch) Example</h3>
             <div className="bg-bg-input border border-border-main rounded-lg overflow-hidden mb-6">
               <pre className="p-4 overflow-x-auto text-sm text-zinc-300 font-mono whitespace-pre-wrap">
-{`const response = await fetch('https://pushhub.varunkulkarni.dpdns.org/api/v1/notify', {
+{`const response = await fetch('https://averosignals.dpdns.org/api/v1/notify', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_SECRET_API_KEY',
