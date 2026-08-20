@@ -35,12 +35,16 @@ export default async function DashboardPage() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
-      await supabase.from('projects').insert({ 
+      const { data, error } = await supabase.from('projects').insert({ 
         name, 
         site_url: siteUrl,
         user_id: user.id 
-      })
-      revalidatePath('/dashboard')
+      }).select().single()
+      
+      if (data && !error) {
+        revalidatePath('/dashboard')
+        redirect(`/dashboard/${data.id}`)
+      }
     }
   }
 
