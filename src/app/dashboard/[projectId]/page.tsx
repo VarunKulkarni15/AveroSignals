@@ -224,27 +224,67 @@ export default function Dashboard({ params }: { params: Promise<{ projectId: str
       </div>
       
       {/* Quick Start Guide */}
-      <div className="mb-10 bg-bg-input/50 border border-[#8BAAA8]/20 rounded-xl p-6">
-        <h2 className="text-lg font-medium text-white mb-2 flex items-center gap-2">
-          <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-          Quick Start Installation
-        </h2>
-        <p className="text-sm text-[#a1a1aa] mb-4">Paste this script tag anywhere in the <code className="text-[#8BAAA8] bg-bg-main px-1 py-0.5 rounded">&lt;head&gt;</code> of your website to enable push notifications. It will automatically detect your Site URL and Favicon!</p>
-        <div className="relative group">
-          <pre className="bg-bg-main border border-border-main p-4 rounded-lg overflow-x-auto text-sm text-[#ededed] font-mono whitespace-pre-wrap break-all">
-            {scriptTag || 'Loading...'}
-          </pre>
-          <button 
-            onClick={() => {
-              navigator.clipboard.writeText(scriptTag);
-              alert('Script copied to clipboard!');
-            }}
-            className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-bg-input border border-border-main rounded px-3 py-1.5 text-xs text-[#a1a1aa] hover:text-white"
-          >
-            Copy Code
-          </button>
+      <div className="mb-10 bg-bg-input/50 border border-[#8BAAA8]/20 rounded-xl overflow-hidden">
+        <div className="p-6 border-b border-border-main">
+          <h2 className="text-lg font-medium text-white mb-2 flex items-center gap-2">
+            <svg className="w-5 h-5 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Quick Start Installation
+          </h2>
+          <p className="text-sm text-[#a1a1aa]">Follow these two steps to instantly add push notifications to your website.</p>
+        </div>
+        
+        <div className="p-6 space-y-8">
+          {/* Step 1 */}
+          <div>
+            <h3 className="text-white font-medium mb-3 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-[#8BAAA8] text-black text-xs font-bold flex items-center justify-center">1</span>
+              Install the Service Worker
+            </h3>
+            <p className="text-sm text-zinc-400 mb-4 pl-8">
+              Push notifications require a background worker to receive messages when your site is closed. Download this file and place it in the <strong>root directory</strong> of your website (e.g., <code className="text-[#8BAAA8]">https://yoursite.com/avero-sw.js</code>).
+            </p>
+            <div className="pl-8">
+              <a 
+                href="/avero-sw.js" 
+                download="avero-sw.js"
+                className="inline-flex items-center gap-2 bg-[#1a1a1a] hover:bg-[#222222] border border-border-main text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                <svg className="w-4 h-4 text-[#8BAAA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download avero-sw.js
+              </a>
+            </div>
+          </div>
+
+          <div className="h-px bg-border-main ml-8"></div>
+
+          {/* Step 2 */}
+          <div>
+            <h3 className="text-white font-medium mb-3 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-[#8BAAA8] text-black text-xs font-bold flex items-center justify-center">2</span>
+              Add the SDK Script
+            </h3>
+            <p className="text-sm text-zinc-400 mb-4 pl-8">
+              Paste this script tag anywhere in the <code className="text-[#8BAAA8] bg-bg-main px-1 py-0.5 rounded">&lt;head&gt;</code> of your website. It will automatically detect your Site URL and Favicon!
+            </p>
+            <div className="pl-8 relative group">
+              <pre className="bg-bg-main border border-border-main p-4 rounded-lg overflow-x-auto text-sm text-[#ededed] font-mono whitespace-pre-wrap break-all">
+                {scriptTag || 'Loading...'}
+              </pre>
+              <button 
+                onClick={() => {
+                  navigator.clipboard.writeText(scriptTag);
+                  alert('Script copied to clipboard!');
+                }}
+                className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-bg-input border border-border-main rounded px-3 py-1.5 text-xs text-[#a1a1aa] hover:text-white"
+              >
+                Copy Code
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
